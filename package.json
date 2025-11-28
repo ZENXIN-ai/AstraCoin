@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "vercel dev",
     "dev": "vercel dev",
-    "build": "echo 'static site - no build step'"
+    "start": "vercel dev",
+    "build": "echo \"static build\""
   },
   "dependencies": {
-    "node-fetch": "^3.4.1",
+    "node-fetch": "^3.3.2",
     "ethers": "^6.9.0"
-{
+  },
   "engines": {
-    "node": "24.x"
+    "node": "18.x"
   }
 }
