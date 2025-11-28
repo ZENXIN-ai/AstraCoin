@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     list.push(proposal);
     fs.writeFileSync(filePath, JSON.stringify(list, null, 2));
 
-    // 4️⃣ 写入向量数据库（Zilliz）
+    // 4️⃣ 写入 Zilliz 向量数据库
     await milvusClient.insert({
       collection_name: collectionName,
       data: [
