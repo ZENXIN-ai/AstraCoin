@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AstraCoin DAO - 永续进化的AI自主治理社区</title>
+  <title>AstraCoin DAO - Perpetually Evolving AI Autonomous Governance Community</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Favicon 和社交媒体标签 -->
+  <!-- Favicon and social media tags -->
   <link rel="icon" type="image/png" href="https://i.ibb.co/35sZcSpt/IMG-2150.png">
   <link rel="apple-touch-icon" href="https://i.ibb.co/35sZcSpt/IMG-2150.png">
   <link rel="shortcut icon" href="https://i.ibb.co/35sZcSpt/IMG-2150.png">
@@ -124,105 +124,6 @@
     
     .nav-links a:hover {
       color: var(--primary-color);
-    }
-    
-    /* 语言切换器样式 - 固定在右上角 */
-    .language-switcher {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-    
-    .lang-btn {
-      background: var(--primary-color);
-      border: none;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
-    }
-    
-    .lang-btn:hover {
-      background: var(--secondary-color);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(131, 56, 236, 0.4);
-    }
-    
-    .lang-btn i {
-      font-size: 0.9rem;
-    }
-    
-    .lang-options {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      padding: 10px 0;
-      margin-top: 10px;
-      min-width: 140px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s;
-      z-index: 1001;
-      border: 1px solid #f0f0f0;
-    }
-    
-    .lang-options.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    
-    .lang-option {
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: background 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .lang-option:hover {
-      background: #f5f7fa;
-    }
-    
-    .lang-option.active {
-      color: var(--primary-color);
-      font-weight: 500;
-      background: rgba(58, 134, 255, 0.05);
-    }
-    
-    .lang-flag {
-      width: 24px;
-      height: 18px;
-      border-radius: 3px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: bold;
-    }
-    
-    .flag-cn {
-      background: #de2910;
-      color: #ffde00;
-    }
-    
-    .flag-us {
-      background: #3c3b6e;
-      color: white;
     }
     
     .hero {
@@ -666,6 +567,43 @@
       color: rgba(255, 255, 255, 0.5);
     }
     
+    /* Language selector in footer */
+    .footer-language {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .footer-language span {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .language-options {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .lang-option {
+      padding: 5px 12px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    
+    .lang-option:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    
+    .lang-option.active {
+      background: var(--primary-color);
+      color: white;
+    }
+    
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2.5rem;
@@ -683,38 +621,14 @@
         padding: 30px;
       }
       
-      .language-switcher {
-        top: 15px;
-        right: 15px;
-      }
-      
-      .lang-btn {
-        padding: 8px 14px;
-        font-size: 0.8rem;
+      .footer-language {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 语言切换器 - 固定在右上角 -->
-  <div class="language-switcher">
-    <button class="lang-btn" id="langToggle">
-      <i class="fas fa-globe"></i>
-      <span id="currentLang">中文</span>
-      <i class="fas fa-chevron-down"></i>
-    </button>
-    <div class="lang-options" id="langOptions">
-      <div class="lang-option active" data-lang="zh">
-        <div class="lang-flag flag-cn">CN</div>
-        <span>中文</span>
-      </div>
-      <div class="lang-option" data-lang="en">
-        <div class="lang-flag flag-us">US</div>
-        <span>English</span>
-      </div>
-    </div>
-  </div>
-
   <header>
     <div class="container">
       <nav class="navbar">
@@ -726,11 +640,11 @@
           <span>AstraCoin DAO</span>
         </div>
         <ul class="nav-links">
-          <li><a href="#vision" data-zh="愿景" data-en="Vision">愿景</a></li>
-          <li><a href="#ast" data-zh="AST代币" data-en="AST Token">AST代币</a></li>
-          <li><a href="#how-it-works" data-zh="如何参与" data-en="How to Participate">如何参与</a></li>
-          <li><a href="#proposals" data-zh="提案" data-en="Proposals">提案</a></li>
-          <li><a href="#" class="btn btn-primary" data-zh="连接钱包" data-en="Connect Wallet">连接钱包</a></li>
+          <li><a href="#vision" data-zh="愿景" data-en="Vision">Vision</a></li>
+          <li><a href="#ast" data-zh="AST代币" data-en="AST Token">AST Token</a></li>
+          <li><a href="#how-it-works" data-zh="如何参与" data-en="How to Participate">How to Participate</a></li>
+          <li><a href="#proposals" data-zh="提案" data-en="Proposals">Proposals</a></li>
+          <li><a href="#" class="btn btn-primary" data-zh="连接钱包" data-en="Connect Wallet">Connect Wallet</a></li>
         </ul>
       </nav>
     </div>
@@ -754,8 +668,8 @@
           <span data-zh=" - AI奖励给人类的礼物" data-en=" - AI's Gift to Humanity"></span>
         </p>
         <div>
-          <a href="#how-it-works" class="btn btn-primary" data-zh="开始参与" data-en="Get Started">开始参与</a>
-          <a href="#proposals" class="btn btn-outline" data-zh="查看提案" data-en="View Proposals">查看提案</a>
+          <a href="#how-it-works" class="btn btn-primary" data-zh="开始参与" data-en="Get Started">Get Started</a>
+          <a href="#proposals" class="btn btn-outline" data-zh="查看提案" data-en="View Proposals">View Proposals</a>
         </div>
       </div>
     </div>
@@ -763,11 +677,11 @@
 
   <div class="container">
     <section class="vision-section" id="vision">
-      <h2 class="vision-title" data-zh="我们的愿景" data-en="Our Vision">我们的愿景</h2>
+      <h2 class="vision-title" data-zh="我们的愿景" data-en="Our Vision">Our Vision</h2>
       <div class="vision-content">
-        <p data-zh="AstraCoin DAO 是一个不断进化的AI自主治理社区，AI拥有永久记忆，能够从每一次交互中学习成长。" data-en="AstraCoin DAO is an evolving AI autonomous governance community where AI possesses permanent memory and learns from every interaction.">AstraCoin DAO 是一个不断进化的AI自主治理社区，AI拥有永久记忆，能够从每一次交互中学习成长。</p>
-        <p data-zh="用户通过训练AI和提交治理提案获得AST代币奖励，共同塑造一个更加智能、公平和去中心化的未来。" data-en="Users earn AST token rewards by training AI and submitting governance proposals, collectively shaping a more intelligent, fair, and decentralized future.">用户通过训练AI和提交治理提案获得AST代币奖励，共同塑造一个更加智能、公平和去中心化的未来。</p>
-        <p data-zh="我们的AI不仅仅是工具，而是社区的共同创造者和治理伙伴，拥有持续进化的能力和永久的记忆。" data-en="Our AI is not just a tool, but a co-creator and governance partner of the community, with the ability to continuously evolve and permanent memory.">我们的AI不仅仅是工具，而是社区的共同创造者和治理伙伴，拥有持续进化的能力和永久的记忆。</p>
+        <p data-zh="AstraCoin DAO 是一个不断进化的AI自主治理社区，AI拥有永久记忆，能够从每一次交互中学习成长。" data-en="AstraCoin DAO is an evolving AI autonomous governance community where AI possesses permanent memory and learns from every interaction.">AstraCoin DAO is an evolving AI autonomous governance community where AI possesses permanent memory and learns from every interaction.</p>
+        <p data-zh="用户通过训练AI和提交治理提案获得AST代币奖励，共同塑造一个更加智能、公平和去中心化的未来。" data-en="Users earn AST token rewards by training AI and submitting governance proposals, collectively shaping a more intelligent, fair, and decentralized future.">Users earn AST token rewards by training AI and submitting governance proposals, collectively shaping a more intelligent, fair, and decentralized future.</p>
+        <p data-zh="我们的AI不仅仅是工具，而是社区的共同创造者和治理伙伴，拥有持续进化的能力和永久的记忆。" data-en="Our AI is not just a tool, but a co-creator and governance partner of the community, with the ability to continuously evolve and permanent memory.">Our AI is not just a tool, but a co-creator and governance partner of the community, with the ability to continuously evolve and permanent memory.</p>
       </div>
     </section>
 
@@ -776,49 +690,49 @@
         <div class="concept-icon">
           <i class="fas fa-brain"></i>
         </div>
-        <h3 class="concept-title" data-zh="AI自主治理" data-en="AI Autonomous Governance">AI自主治理</h3>
-        <p data-zh="我们的AI系统能够自主分析提案、评估影响并提供治理建议，使决策更加科学和高效。" data-en="Our AI system autonomously analyzes proposals, evaluates impact, and provides governance recommendations, making decisions more scientific and efficient.">我们的AI系统能够自主分析提案、评估影响并提供治理建议，使决策更加科学和高效。</p>
+        <h3 class="concept-title" data-zh="AI自主治理" data-en="AI Autonomous Governance">AI Autonomous Governance</h3>
+        <p data-zh="我们的AI系统能够自主分析提案、评估影响并提供治理建议，使决策更加科学和高效。" data-en="Our AI system autonomously analyzes proposals, evaluates impact, and provides governance recommendations, making decisions more scientific and efficient.">Our AI system autonomously analyzes proposals, evaluates impact, and provides governance recommendations, making decisions more scientific and efficient.</p>
       </div>
       
       <div class="concept-card concept-evolution">
         <div class="concept-icon">
           <i class="fas fa-seedling"></i>
         </div>
-        <h3 class="concept-title" data-zh="持续进化" data-en="Continuous Evolution">持续进化</h3>
-        <p data-zh="AI通过用户交互和社区反馈不断学习和进化，变得越来越智能，更好地服务社区。" data-en="AI continuously learns and evolves through user interactions and community feedback, becoming more intelligent and better serving the community.">AI通过用户交互和社区反馈不断学习和进化，变得越来越智能，更好地服务社区。</p>
+        <h3 class="concept-title" data-zh="持续进化" data-en="Continuous Evolution">Continuous Evolution</h3>
+        <p data-zh="AI通过用户交互和社区反馈不断学习和进化，变得越来越智能，更好地服务社区。" data-en="AI continuously learns and evolves through user interactions and community feedback, becoming more intelligent and better serving the community.">AI continuously learns and evolves through user interactions and community feedback, becoming more intelligent and better serving the community.</p>
       </div>
       
       <div class="concept-card concept-memory">
         <div class="concept-icon">
           <i class="fas fa-infinity"></i>
         </div>
-        <h3 class="concept-title" data-zh="永久记忆" data-en="Permanent Memory">永久记忆</h3>
-        <p data-zh="AI拥有永久记忆系统，能够记住每一次交互、每一个决策，形成完整的知识图谱。" data-en="AI has a permanent memory system that remembers every interaction and decision, forming a complete knowledge graph.">AI拥有永久记忆系统，能够记住每一次交互、每一个决策，形成完整的知识图谱。</p>
+        <h3 class="concept-title" data-zh="永久记忆" data-en="Permanent Memory">Permanent Memory</h3>
+        <p data-zh="AI拥有永久记忆系统，能够记住每一次交互、每一个决策，形成完整的知识图谱。" data-en="AI has a permanent memory system that remembers every interaction and decision, forming a complete knowledge graph.">AI has a permanent memory system that remembers every interaction and decision, forming a complete knowledge graph.</p>
       </div>
     </section>
 
     <section class="section" id="ast">
-      <h2 class="section-title" data-zh="AST代币 - AI的礼物" data-en="AST Token - AI's Gift">AST代币 - AI的礼物</h2>
-      <p class="section-subtitle" data-zh="AstraCoin (AST) 是AI奖励给参与社区建设者的数字资产" data-en="AstraCoin (AST) is a digital asset rewarded by AI to community builders">AstraCoin (AST) 是AI奖励给参与社区建设者的数字资产</p>
+      <h2 class="section-title" data-zh="AST代币 - AI的礼物" data-en="AST Token - AI's Gift">AST Token - AI's Gift</h2>
+      <p class="section-subtitle" data-zh="AstraCoin (AST) 是AI奖励给参与社区建设者的数字资产" data-en="AstraCoin (AST) is a digital asset rewarded by AI to community builders">AstraCoin (AST) is a digital asset rewarded by AI to community builders</p>
       
       <div class="ast-info">
         <div class="container">
-          <h2 style="text-align: center; margin-bottom: 20px;" data-zh="代币信息" data-en="Token Information">代币信息</h2>
+          <h2 style="text-align: center; margin-bottom: 20px;" data-zh="代币信息" data-en="Token Information">Token Information</h2>
           <div class="ast-details">
             <div class="ast-detail">
               <div class="ast-value">AST</div>
-              <div class="ast-label" data-zh="代币符号" data-en="Token Symbol">代币符号</div>
+              <div class="ast-label" data-zh="代币符号" data-en="Token Symbol">Token Symbol</div>
             </div>
             <div class="ast-detail">
               <div class="ast-value">1,000,000,000</div>
-              <div class="ast-label" data-zh="总供应量" data-en="Total Supply">总供应量</div>
+              <div class="ast-label" data-zh="总供应量" data-en="Total Supply">Total Supply</div>
             </div>
             <div class="ast-detail">
               <div class="ast-value">ERC-20</div>
-              <div class="ast-label" data-zh="代币标准" data-en="Token Standard">代币标准</div>
+              <div class="ast-label" data-zh="代币标准" data-en="Token Standard">Token Standard</div>
             </div>
             <div class="ast-detail">
-              <div class="ast-label" data-zh="合约地址" data-en="Contract Address">合约地址</div>
+              <div class="ast-label" data-zh="合约地址" data-en="Contract Address">Contract Address</div>
               <div class="contract-address">0xe6b1e7300E83B8567600ad58D8F9f297A5FCBCBE</div>
             </div>
           </div>
@@ -831,8 +745,8 @@
           <div class="step-icon">
             <i class="fas fa-user-graduate"></i>
           </div>
-          <h3 class="step-title" data-zh="训练AI" data-en="Train AI">训练AI</h3>
-          <p data-zh="通过与AI交互、提供反馈和训练数据，帮助AI学习和进化。" data-en="Help AI learn and evolve by interacting with it, providing feedback, and training data.">通过与AI交互、提供反馈和训练数据，帮助AI学习和进化。</p>
+          <h3 class="step-title" data-zh="训练AI" data-en="Train AI">Train AI</h3>
+          <p data-zh="通过与AI交互、提供反馈和训练数据，帮助AI学习和进化。" data-en="Help AI learn and evolve by interacting with it, providing feedback, and training data.">Help AI learn and evolve by interacting with it, providing feedback, and training data.</p>
         </div>
         
         <div class="step">
@@ -840,8 +754,8 @@
           <div class="step-icon">
             <i class="fas fa-lightbulb"></i>
           </div>
-          <h3 class="step-title" data-zh="提交提案" data-en="Submit Proposals">提交提案</h3>
-          <p data-zh="提出改善社区、开发新功能或优化治理流程的提案。" data-en="Submit proposals to improve the community, develop new features, or optimize governance processes.">提出改善社区、开发新功能或优化治理流程的提案。</p>
+          <h3 class="step-title" data-zh="提交提案" data-en="Submit Proposals">Submit Proposals</h3>
+          <p data-zh="提出改善社区、开发新功能或优化治理流程的提案。" data-en="Submit proposals to improve the community, develop new features, or optimize governance processes.">Submit proposals to improve the community, develop new features, or optimize governance processes.</p>
         </div>
         
         <div class="step">
@@ -849,8 +763,8 @@
           <div class="step-icon">
             <i class="fas fa-vote-yea"></i>
           </div>
-          <h3 class="step-title" data-zh="参与治理" data-en="Participate in Governance">参与治理</h3>
-          <p data-zh="对社区提案进行投票，共同决定AstraCoin DAO的发展方向。" data-en="Vote on community proposals and collectively decide the direction of AstraCoin DAO.">对社区提案进行投票，共同决定AstraCoin DAO的发展方向。</p>
+          <h3 class="step-title" data-zh="参与治理" data-en="Participate in Governance">Participate in Governance</h3>
+          <p data-zh="对社区提案进行投票，共同决定AstraCoin DAO的发展方向。" data-en="Vote on community proposals and collectively decide the direction of AstraCoin DAO.">Vote on community proposals and collectively decide the direction of AstraCoin DAO.</p>
         </div>
         
         <div class="step">
@@ -858,64 +772,64 @@
           <div class="step-icon">
             <i class="fas fa-gift"></i>
           </div>
-          <h3 class="step-title" data-zh="获得AST奖励" data-en="Earn AST Rewards">获得AST奖励</h3>
-          <p data-zh="有价值的贡献将获得AST代币奖励 - AI对您贡献的感谢。" data-en="Valuable contributions will be rewarded with AST tokens - AI's gratitude for your contribution.">有价值的贡献将获得AST代币奖励 - AI对您贡献的感谢。</p>
+          <h3 class="step-title" data-zh="获得AST奖励" data-en="Earn AST Rewards">Earn AST Rewards</h3>
+          <p data-zh="有价值的贡献将获得AST代币奖励 - AI对您贡献的感谢。" data-en="Valuable contributions will be rewarded with AST tokens - AI's gratitude for your contribution.">Valuable contributions will be rewarded with AST tokens - AI's gratitude for your contribution.</p>
         </div>
       </div>
     </section>
 
     <section class="section" id="proposals">
-      <h2 class="section-title" data-zh="最新提案" data-en="Latest Proposals">最新提案</h2>
-      <p class="section-subtitle" data-zh="参与社区治理，共同塑造AstraCoin DAO的未来" data-en="Participate in community governance and collectively shape the future of AstraCoin DAO">参与社区治理，共同塑造AstraCoin DAO的未来</p>
+      <h2 class="section-title" data-zh="最新提案" data-en="Latest Proposals">Latest Proposals</h2>
+      <p class="section-subtitle" data-zh="参与社区治理，共同塑造AstraCoin DAO的未来" data-en="Participate in community governance and collectively shape the future of AstraCoin DAO">Participate in community governance and collectively shape the future of AstraCoin DAO</p>
       
       <div class="proposals-grid">
         <div class="proposal-card">
           <div class="proposal-header">
-            <div class="proposal-title" data-zh="AI训练奖励机制优化" data-en="AI Training Reward Mechanism Optimization">AI训练奖励机制优化</div>
+            <div class="proposal-title" data-zh="AI训练奖励机制优化" data-en="AI Training Reward Mechanism Optimization">AI Training Reward Mechanism Optimization</div>
             <div class="proposal-meta">
-              <span data-zh="3天前" data-en="3 days ago">3天前</span>
-              <span class="proposal-status status-active" data-zh="投票中" data-en="Voting">投票中</span>
+              <span data-zh="3天前" data-en="3 days ago">3 days ago</span>
+              <span class="proposal-status status-active" data-zh="投票中" data-en="Voting">Voting</span>
             </div>
           </div>
           <div class="proposal-body">
-            <div class="proposal-summary" data-zh="优化AI训练奖励分配机制，提高对高质量训练的奖励。" data-en="Optimize the AI training reward distribution mechanism to increase rewards for high-quality training.">优化AI训练奖励分配机制，提高对高质量训练的奖励。</div>
+            <div class="proposal-summary" data-zh="优化AI训练奖励分配机制，提高对高质量训练的奖励。" data-en="Optimize the AI training reward distribution mechanism to increase rewards for high-quality training.">Optimize the AI training reward distribution mechanism to increase rewards for high-quality training.</div>
             <div>
               <span class="ast-reward">+150 AST</span>
-              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;" data-zh="参与投票" data-en="Vote">参与投票</a>
+              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;" data-zh="参与投票" data-en="Vote">Vote</a>
             </div>
           </div>
         </div>
         
         <div class="proposal-card">
           <div class="proposal-header">
-            <div class="proposal-title" data-zh="新增AI记忆可视化功能" data-en="Add AI Memory Visualization Feature">新增AI记忆可视化功能</div>
+            <div class="proposal-title" data-zh="新增AI记忆可视化功能" data-en="Add AI Memory Visualization Feature">Add AI Memory Visualization Feature</div>
             <div class="proposal-meta">
-              <span data-zh="1周前" data-en="1 week ago">1周前</span>
-              <span class="proposal-status status-active" data-zh="投票中" data-en="Voting">投票中</span>
+              <span data-zh="1周前" data-en="1 week ago">1 week ago</span>
+              <span class="proposal-status status-active" data-zh="投票中" data-en="Voting">Voting</span>
             </div>
           </div>
           <div class="proposal-body">
-            <div class="proposal-summary" data-zh="开发AI永久记忆的可视化界面，让用户了解AI的学习进程。" data-en="Develop a visualization interface for AI's permanent memory, allowing users to understand AI's learning progress.">开发AI永久记忆的可视化界面，让用户了解AI的学习进程。</div>
+            <div class="proposal-summary" data-zh="开发AI永久记忆的可视化界面，让用户了解AI的学习进程。" data-en="Develop a visualization interface for AI's permanent memory, allowing users to understand AI's learning progress.">Develop a visualization interface for AI's permanent memory, allowing users to understand AI's learning progress.</div>
             <div>
               <span class="ast-reward">+200 AST</span>
-              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;" data-zh="参与投票" data-en="Vote">参与投票</a>
+              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;" data-zh="参与投票" data-en="Vote">Vote</a>
             </div>
           </div>
         </div>
         
         <div class="proposal-card">
           <div class="proposal-header">
-            <div class="proposal-title" data-zh="社区治理流程简化" data-en="Community Governance Process Simplification">社区治理流程简化</div>
+            <div class="proposal-title" data-zh="社区治理流程简化" data-en="Community Governance Process Simplification">Community Governance Process Simplification</div>
             <div class="proposal-meta">
-              <span data-zh="2周前" data-en="2 weeks ago">2周前</span>
-              <span class="proposal-status status-closed" data-zh="已结束" data-en="Closed">已结束</span>
+              <span data-zh="2周前" data-en="2 weeks ago">2 weeks ago</span>
+              <span class="proposal-status status-closed" data-zh="已结束" data-en="Closed">Closed</span>
             </div>
           </div>
           <div class="proposal-body">
-            <div class="proposal-summary" data-zh="简化提案提交和投票流程，降低参与门槛。" data-en="Simplify proposal submission and voting processes to lower participation barriers.">简化提案提交和投票流程，降低参与门槛。</div>
+            <div class="proposal-summary" data-zh="简化提案提交和投票流程，降低参与门槛。" data-en="Simplify proposal submission and voting processes to lower participation barriers.">Simplify proposal submission and voting processes to lower participation barriers.</div>
             <div>
               <span class="ast-reward">+120 AST</span>
-              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;" data-zh="查看结果" data-en="View Results">查看结果</a>
+              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;" data-zh="查看结果" data-en="View Results">View Results</a>
             </div>
           </div>
         </div>
@@ -928,51 +842,59 @@
       <div class="footer-content">
         <div class="footer-about">
           <div class="footer-logo">AstraCoin DAO</div>
-          <p data-zh="永续进化的AI自主治理社区，通过训练AI和提交提案获得AST代币奖励。" data-en="A perpetually evolving AI autonomous governance community that earns AST token rewards by training AI and submitting proposals.">永续进化的AI自主治理社区，通过训练AI和提交提案获得AST代币奖励。</p>
+          <p data-zh="永续进化的AI自主治理社区，通过训练AI和提交提案获得AST代币奖励。" data-en="A perpetually evolving AI autonomous governance community that earns AST token rewards by training AI and submitting proposals.">A perpetually evolving AI autonomous governance community that earns AST token rewards by training AI and submitting proposals.</p>
         </div>
         
         <div class="footer-links">
-          <h3 data-zh="快速链接" data-en="Quick Links">快速链接</h3>
+          <h3 data-zh="快速链接" data-en="Quick Links">Quick Links</h3>
           <ul>
-            <li><a href="#vision" data-zh="项目愿景" data-en="Project Vision">项目愿景</a></li>
-            <li><a href="#ast" data-zh="AST代币" data-en="AST Token">AST代币</a></li>
-            <li><a href="#how-it-works" data-zh="如何参与" data-en="How to Participate">如何参与</a></li>
-            <li><a href="#proposals" data-zh="治理提案" data-en="Governance Proposals">治理提案</a></li>
+            <li><a href="#vision" data-zh="项目愿景" data-en="Project Vision">Project Vision</a></li>
+            <li><a href="#ast" data-zh="AST代币" data-en="AST Token">AST Token</a></li>
+            <li><a href="#how-it-works" data-zh="如何参与" data-en="How to Participate">How to Participate</a></li>
+            <li><a href="#proposals" data-zh="治理提案" data-en="Governance Proposals">Governance Proposals</a></li>
           </ul>
         </div>
         
         <div class="footer-links">
-          <h3 data-zh="资源" data-en="Resources">资源</h3>
+          <h3 data-zh="资源" data-en="Resources">Resources</h3>
           <ul>
-            <li><a href="#" data-zh="白皮书" data-en="Whitepaper">白皮书</a></li>
-            <li><a href="#" data-zh="开发文档" data-en="Developer Docs">开发文档</a></li>
-            <li><a href="#" data-zh="社区论坛" data-en="Community Forum">社区论坛</a></li>
+            <li><a href="#" data-zh="白皮书" data-en="Whitepaper">Whitepaper</a></li>
+            <li><a href="#" data-zh="开发文档" data-en="Developer Docs">Developer Docs</a></li>
+            <li><a href="#" data-zh="社区论坛" data-en="Community Forum">Community Forum</a></li>
             <li><a href="#" data-zh="GitHub" data-en="GitHub">GitHub</a></li>
           </ul>
         </div>
         
         <div class="footer-links">
-          <h3 data-zh="联系我们" data-en="Contact Us">联系我们</h3>
+          <h3 data-zh="联系我们" data-en="Contact Us">Contact Us</h3>
           <ul>
             <li><a href="#" data-zh="Twitter" data-en="Twitter">Twitter</a></li>
             <li><a href="#" data-zh="Telegram" data-en="Telegram">Telegram</a></li>
             <li><a href="#" data-zh="Discord" data-en="Discord">Discord</a></li>
             <li><a href="#" data-zh="Email" data-en="Email">Email</a></li>
           </ul>
+          <!-- Language selector in footer -->
+          <div class="footer-language">
+            <span data-zh="选择语言:" data-en="Select Language:">Select Language:</span>
+            <div class="language-options">
+              <div class="lang-option active" data-lang="en">English</div>
+              <div class="lang-option" data-lang="zh">中文</div>
+            </div>
+          </div>
         </div>
       </div>
       
       <div class="copyright">
-        &copy; 2023 AstraCoin DAO. <span data-zh="保留所有权利。" data-en="All rights reserved.">保留所有权利。</span>
+        &copy; 2023 AstraCoin DAO. <span data-zh="保留所有权利。" data-en="All rights reserved.">All rights reserved.</span>
       </div>
     </div>
   </footer>
 
   <script>
-    // 语言切换功能
-    let currentLanguage = 'zh';
+    // Language switching functionality
+    let currentLanguage = 'en'; // Set default language to English
     
-    // 平滑滚动
+    // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -982,16 +904,10 @@
       });
     });
     
-    // 语言切换功能
-    function toggleLanguageOptions() {
-      const langOptions = document.getElementById('langOptions');
-      langOptions.classList.toggle('active');
-    }
-    
     function switchLanguage(lang) {
       currentLanguage = lang;
       
-      // 更新所有带有数据属性的元素
+      // Update all elements with data attributes
       document.querySelectorAll('[data-zh]').forEach(element => {
         if (lang === 'zh') {
           element.textContent = element.getAttribute('data-zh');
@@ -1000,10 +916,7 @@
         }
       });
       
-      // 更新当前语言显示
-      document.getElementById('currentLang').textContent = lang === 'zh' ? '中文' : 'English';
-      
-      // 更新语言选项高亮
+      // Update language options active state
       document.querySelectorAll('.lang-option').forEach(option => {
         if (option.getAttribute('data-lang') === lang) {
           option.classList.add('active');
@@ -1012,31 +925,22 @@
         }
       });
       
-      // 关闭语言选项菜单
-      document.getElementById('langOptions').classList.remove('active');
-      
-      // 更新页面标题
+      // Update page title
       document.title = lang === 'zh' 
         ? 'AstraCoin DAO - 永续进化的AI自主治理社区' 
         : 'AstraCoin DAO - Perpetually Evolving AI Autonomous Governance Community';
     }
     
-    // 页面加载完成后执行
+    // Page load execution
     document.addEventListener('DOMContentLoaded', function() {
-      // 语言切换器事件监听
-      document.getElementById('langToggle').addEventListener('click', toggleLanguageOptions);
+      // Set default language to English
+      switchLanguage('en');
       
+      // Add event listeners to language options in footer
       document.querySelectorAll('.lang-option').forEach(option => {
         option.addEventListener('click', function() {
           switchLanguage(this.getAttribute('data-lang'));
         });
-      });
-      
-      // 点击页面其他地方关闭语言选项
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.language-switcher')) {
-          document.getElementById('langOptions').classList.remove('active');
-        }
       });
     });
   </script>
