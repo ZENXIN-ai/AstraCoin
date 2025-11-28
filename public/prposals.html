@@ -1,42 +1,61 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>提案列表 - AstraCoin</title>
-<style>
-body{background:#0f0f23;color:#fff;font-family:Arial;padding:20px;}
-.card{background:#11131f;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);margin-bottom:15px;}
-a.btn{display:block;padding:10px 15px;background:#00ff88;color:#000;text-decoration:none;border-radius:8px;margin-bottom:20px;}
-.btn:hover{opacity:.85;}
-</style>
+  <meta charset="UTF-8">
+  <title>AstraCoin DAO - 提案列表</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+    h1 { text-align: center; }
+    .card {
+      padding: 15px;
+      background: white;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .title { font-size: 18px; font-weight: bold; }
+    .meta { color: gray; font-size: 13px; }
+    .summary { margin-top: 8px; }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #333;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+  </style>
 </head>
+
 <body>
 
-<h1>📜 提案列表</h1>
+<h1>全部提案</h1>
 
-<a class="btn" href="/analyze.html">新建提案（AI 辅助）</a>
-
-<div id="list">加载中...</div>
+<div id="container"></div>
 
 <script>
-async function load() {
-  const res = await fetch("/api/list");
+async function loadList() {
+  const res = await fetch("/api/listProposals");
   const list = await res.json();
 
-  const box = document.getElementById("list");
-  box.innerHTML = "";
+  let html = "";
 
-  list.forEach(item=>{
-    box.innerHTML += `
+  list.forEach(p => {
+    html += `
       <div class="card">
-        <h3>${item.title}</h3>
-        <p>${item.content.slice(0,80)}...</p>
-        <a class="btn" href="/proposal.html?id=${item.id}">查看详情</a>
-      </div>`;
+        <div class="title">${p.title}</div>
+        <div class="meta">创建于：${new Date(p.created_at).toLocaleString()}</div>
+        <div class="summary">${p.summary}</div>
+        <a class="btn" href="proposal.html?id=${p.id}">查看详情</a>
+      </div>
+    `;
   });
+
+  document.getElementById("container").innerHTML = html;
 }
-load();
+
+loadList();
 </script>
 
 </body>
