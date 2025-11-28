@@ -1,31 +1,32 @@
-import { milvusClient, collectionName } from "../../../lib/milvus";
+import fs from "fs";
+import path from "path";
 
-export default async function handler(req, res) {
+export default function handler(req, res) {
   try {
-    // 从 Milvus 查询所有 id
-    const results = await milvusClient.query({
-      collection_name: collectionName,
-      expr: "id >= 0", // 取全部数据
-      output_fields: ["id"],
-    });
+    const filePath = path.join(process.cwd(), "data", "proposals.json");
 
-    // 排序，保证顺序从旧到新
-    const ids = results.data
-      .map(item => item.id)
-      .sort((a, b) => Number(a) - Number(b));
+    if (!fs.existsSync(filePath)) {
+      return res.status(500).json({ error: "proposals.json not found" });
+    }
 
-    // 这里你还没有真正存储 title / content，
-    // 暂时给一个占位内容（之后我们会做真正的存储机制）
-    const list = ids.map(id => ({
-      id,
-      title: `提案 #${id}`,
-      content: "这里是占位内容，之后会替换为真实数据库内容。",
+    const list = JSON.parse(fs.readFileSync(filePath, "utf8"));
+
+    // 可以按时间排序（最新在最前）
+    list.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    // 列表页不需要全文 → 返回摘要
+    const formatted = list.map(p => ({
+      id: p.id,
+      title: p.title,
+      summary: p.content.slice(0, 100) + (p.content.length > 100 ? "..." : ""),
+      created_at: p.created_at,
+      votes: p.votes || 0
     }));
 
-    return res.status(200).json(list);
+    return res.status(200).json(formatted);
 
   } catch (err) {
     console.error("LIST ERROR:", err);
-    return res.status(500).json({ error: "Server error", detail: err });
+    return res.status(500).json({ error: "Server error", detail: err.toString() });
   }
 }
