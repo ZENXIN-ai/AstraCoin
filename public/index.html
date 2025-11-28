@@ -5,6 +5,24 @@
   <title>AstraCoin DAO - 永续进化的AI自主治理社区</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Favicon 和社交媒体标签 -->
+  <link rel="icon" type="image/png" href="https://i.ibb.co/35sZcSpt/IMG-2150.png">
+  <link rel="apple-touch-icon" href="https://i.ibb.co/35sZcSpt/IMG-2150.png">
+  <link rel="shortcut icon" href="https://i.ibb.co/35sZcSpt/IMG-2150.png">
+  
+  <!-- Open Graph 标签 - 用于社交媒体分享 -->
+  <meta property="og:image" content="https://i.ibb.co/35sZcSpt/IMG-2150.png">
+  <meta property="og:title" content="AstraCoin DAO - 永续进化的AI自主治理社区">
+  <meta property="og:description" content="通过训练AI和提交提案获得AST代币 - AI奖励给人类的礼物">
+  <meta property="og:url" content="https://astra-coin-y5ya.vercel.app">
+  
+  <!-- Twitter Card 标签 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://i.ibb.co/35sZcSpt/IMG-2150.png">
+  <meta name="twitter:title" content="AstraCoin DAO">
+  <meta name="twitter:description" content="永续进化的AI自主治理社区">
+  
   <style>
     :root {
       --primary-color: #3a86ff;
@@ -65,10 +83,37 @@
       color: var(--primary-color);
     }
     
+    .logo-image {
+      position: relative;
+      margin-right: 12px;
+    }
+    
     .logo img {
       height: 40px;
-      margin-right: 10px;
       border-radius: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .logo-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background: var(--ai-gradient);
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: 0.6;
+      z-index: -1;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 0.7; }
+      100% { opacity: 0.4; }
     }
     
     .nav-links {
@@ -115,6 +160,39 @@
       margin: 0 auto;
       position: relative;
       z-index: 1;
+    }
+    
+    .hero-logo {
+      position: relative;
+      margin-bottom: 30px;
+    }
+    
+    .hero-logo img {
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .logo-orb {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 160px;
+      height: 160px;
+      background: var(--ai-gradient);
+      border-radius: 50%;
+      filter: blur(20px);
+      opacity: 0.4;
+      animation: orb-rotate 10s linear infinite;
+    }
+    
+    @keyframes orb-rotate {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
     
     .hero h1 {
@@ -448,6 +526,175 @@
       margin-left: 10px;
     }
     
+    /* 分享部分样式 */
+    .share-section {
+      background: var(--card-bg);
+      padding: 60px 0;
+      margin: 40px 0;
+      border-radius: 20px;
+    }
+    
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+    
+    .share-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .share-btn.twitter {
+      background: #1DA1F2;
+      color: white;
+    }
+    
+    .share-btn.telegram {
+      background: #0088cc;
+      color: white;
+    }
+    
+    .share-btn.copy-link {
+      background: var(--ai-color);
+      color: white;
+    }
+    
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .share-preview {
+      max-width: 500px;
+      margin: 40px auto 0;
+    }
+    
+    .preview-card {
+      display: flex;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e0e0;
+    }
+    
+    .preview-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+    
+    .preview-content {
+      padding: 15px;
+      flex: 1;
+    }
+    
+    .preview-content h3 {
+      margin-bottom: 8px;
+      color: var(--dark-color);
+    }
+    
+    .preview-content p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    
+    .preview-content span {
+      color: var(--ai-color);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    /* 品牌指南部分样式 */
+    .brand-guidelines {
+      background: var(--card-bg);
+      padding: 60px 0;
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .brand-assets {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+    
+    .asset-card {
+      display: flex;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    .asset-preview {
+      padding: 30px;
+      background: var(--light-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .asset-preview img {
+      width: 100px;
+      height: 100px;
+      border-radius: 16px;
+    }
+    
+    .asset-info {
+      padding: 25px;
+      flex: 1;
+    }
+    
+    .asset-info h3 {
+      margin-bottom: 10px;
+      color: var(--dark-color);
+    }
+    
+    .asset-actions {
+      margin-top: 20px;
+    }
+    
+    .usage-guidelines {
+      max-width: 500px;
+      margin: 40px auto 0;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .usage-guidelines h3 {
+      margin-bottom: 15px;
+      color: var(--dark-color);
+    }
+    
+    .usage-guidelines ul {
+      list-style: none;
+    }
+    
+    .usage-guidelines li {
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .usage-guidelines li:last-child {
+      border-bottom: none;
+    }
+    
     footer {
       background: var(--dark-color);
       color: white;
@@ -515,6 +762,28 @@
       .vision-section {
         padding: 30px;
       }
+      
+      .share-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .share-btn {
+        width: 200px;
+      }
+      
+      .preview-card {
+        flex-direction: column;
+      }
+      
+      .preview-card img {
+        width: 100%;
+        height: 150px;
+      }
+      
+      .asset-card {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -523,7 +792,10 @@
     <div class="container">
       <nav class="navbar">
         <div class="logo">
-          <img src="https://i.ibb.co/35sZcSpt/IMG-2150.png" alt="AstraCoin Logo">
+          <div class="logo-image">
+            <img src="https://i.ibb.co/35sZcSpt/IMG-2150.png" alt="AstraCoin Logo">
+            <div class="logo-glow"></div>
+          </div>
           <span>AstraCoin DAO</span>
         </div>
         <ul class="nav-links">
@@ -540,6 +812,10 @@
   <section class="hero">
     <div class="container">
       <div class="hero-content">
+        <div class="hero-logo">
+          <img src="https://i.ibb.co/35sZcSpt/IMG-2150.png" alt="AstraCoin">
+          <div class="logo-orb"></div>
+        </div>
         <h1>AstraCoin DAO</h1>
         <div class="hero-tagline">永续进化的<span class="ast-highlight">AI自主治理社区</span></div>
         <p>通过训练AI和提交提案获得<span class="ast-highlight">AST代币</span> - AI奖励给人类的礼物</p>
@@ -711,6 +987,76 @@
         </div>
       </div>
     </section>
+    
+    <!-- 品牌指南部分 -->
+    <section class="brand-guidelines">
+      <div class="container">
+        <h2 class="section-title">品牌资产使用指南</h2>
+        <p class="section-subtitle">正确使用 AstraCoin DAO 头像和品牌元素</p>
+        
+        <div class="brand-assets">
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="https://i.ibb.co/35sZcSpt/IMG-2150.png" alt="AstraCoin Logo">
+            </div>
+            <div class="asset-info">
+              <h3>官方头像</h3>
+              <p>推荐在社交媒体、内容创作和社区活动中使用我们的官方头像</p>
+              <div class="asset-actions">
+                <button onclick="downloadImage('https://i.ibb.co/35sZcSpt/IMG-2150.png', 'AstraCoin-Logo.png')" class="btn">
+                  <i class="fas fa-download"></i> 下载头像
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="usage-guidelines">
+          <h3>使用规范</h3>
+          <ul>
+            <li>✅ 可以在社交媒体个人资料中使用</li>
+            <li>✅ 可以在内容创作中引用</li>
+            <li>✅ 可以在社区活动中展示</li>
+            <li>❌ 不得用于商业用途未经授权</li>
+            <li>❌ 不得修改或扭曲头像设计</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 分享部分 -->
+    <section class="share-section">
+      <div class="container">
+        <h2 class="section-title">分享 AstraCoin DAO</h2>
+        <p class="section-subtitle">让更多人了解永续进化的AI自主治理社区</p>
+        
+        <div class="share-buttons">
+          <button class="share-btn twitter" onclick="shareOnTwitter()">
+            <i class="fab fa-twitter"></i>
+            分享到 Twitter
+          </button>
+          <button class="share-btn telegram" onclick="shareOnTelegram()">
+            <i class="fab fa-telegram"></i>
+            分享到 Telegram
+          </button>
+          <button class="share-btn copy-link" onclick="copyPageLink()">
+            <i class="fas fa-link"></i>
+            复制链接
+          </button>
+        </div>
+        
+        <div class="share-preview">
+          <div class="preview-card">
+            <img src="https://i.ibb.co/35sZcSpt/IMG-2150.png" alt="AstraCoin Preview">
+            <div class="preview-content">
+              <h3>AstraCoin DAO</h3>
+              <p>永续进化的AI自主治理社区 - 通过训练AI和提交提案获得AST代币奖励</p>
+              <span>astra-coin-y5ya.vercel.app</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <footer>
@@ -773,6 +1119,49 @@
     function updateProposals() {
       // 在实际应用中，这里会从API获取数据
       console.log("更新提案数据...");
+    }
+    
+    // 分享功能
+    function shareOnTwitter() {
+      const text = "探索 AstraCoin DAO - 永续进化的AI自主治理社区 🚀";
+      const url = "https://astra-coin-y5ya.vercel.app";
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      window.open(twitterUrl, '_blank');
+    }
+    
+    function shareOnTelegram() {
+      const text = "探索 AstraCoin DAO - 永续进化的AI自主治理社区 🚀\n\n通过训练AI和提交提案获得AST代币奖励！";
+      const url = "https://astra-coin-y5ya.vercel.app";
+      const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+      window.open(telegramUrl, '_blank');
+    }
+    
+    function copyPageLink() {
+      const url = "https://astra-coin-y5ya.vercel.app";
+      navigator.clipboard.writeText(url).then(() => {
+        alert('链接已复制到剪贴板！');
+      });
+    }
+    
+    // 下载图片功能
+    function downloadImage(url, filename) {
+      fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(blobUrl);
+          document.body.removeChild(a);
+        })
+        .catch(() => {
+          // 如果直接下载失败，打开新窗口
+          window.open(url, '_blank');
+        });
     }
     
     // 页面加载完成后执行
