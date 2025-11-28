@@ -3,38 +3,36 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>提案列表 - AstraCoin</title>
+<title>提案详情 - AstraCoin</title>
 <style>
 body{background:#0f0f23;color:#fff;font-family:Arial;padding:20px;}
-.card{background:#11131f;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);margin-bottom:15px;}
-a.btn{display:block;padding:10px 15px;background:#00ff88;color:#000;text-decoration:none;border-radius:8px;margin-bottom:20px;}
-.btn:hover{opacity:.85;}
+.card{background:#11131f;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);}
+a{color:#00ff88;text-decoration:none;}
+pre{white-space:pre-wrap;background:#1a1d2e;padding:15px;border-radius:10px;}
 </style>
 </head>
+
 <body>
 
-<h1>📜 提案列表</h1>
+<a href="/proposals.html">⬅ 返回提案列表</a>
 
-<a class="btn" href="/analyze.html">新建提案（AI 辅助）</a>
+<h1>提案详情</h1>
 
-<div id="list">加载中...</div>
+<div id="box">加载中...</div>
 
 <script>
 async function load() {
-  const res = await fetch("/api/list");
-  const list = await res.json();
+  const id = new URLSearchParams(location.search).get("id");
 
-  const box = document.getElementById("list");
-  box.innerHTML = "";
+  const res = await fetch("/api/get?id=" + id);
+  const item = await res.json();
 
-  list.forEach(item=>{
-    box.innerHTML += `
-      <div class="card">
-        <h3>${item.title}</h3>
-        <p>${item.content.slice(0,80)}...</p>
-        <a class="btn" href="/proposal.html?id=${item.id}">查看详情</a>
-      </div>`;
-  });
+  document.getElementById("box").innerHTML = `
+    <div class="card">
+      <h2>${item.title}</h2>
+      <pre>${item.content}</pre>
+    </div>
+  `;
 }
 load();
 </script>
