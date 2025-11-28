@@ -1,92 +1,43 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>提案详情 - AstraCoin</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>提案列表 - AstraCoin</title>
 <style>
 body{background:#0f0f23;color:#fff;font-family:Arial;padding:20px;}
-.card{background:#11131f;padding:15px;border-radius:8px;margin-bottom:15px;border:1px solid rgba(255,255,255,0.1);}
-button{background:#00ff88;border:none;padding:8px 14px;border-radius:5px;cursor:pointer;margin-right:8px;}
-a{color:#00ff88;text-decoration:none;}
+.card{background:#11131f;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);margin-bottom:15px;}
+a.btn{display:block;padding:10px 15px;background:#00ff88;color:#000;text-decoration:none;border-radius:8px;margin-bottom:20px;}
+.btn:hover{opacity:.85;}
 </style>
 </head>
-
 <body>
 
-<a href="/proposals.html" style="color:#888;">← 返回列表</a>
-<div id="main"></div>
+<h1>📜 提案列表</h1>
+
+<a class="btn" href="/analyze.html">新建提案（AI 辅助）</a>
+
+<div id="list">加载中...</div>
 
 <script>
-function qs(n){return new URL(location.href).searchParams.get(n);}
+async function load() {
+  const res = await fetch("/api/list");
+  const list = await res.json();
 
-async function load(){
-  const id = qs("id");
-  if(!id){document.getElementById("main").innerHTML="缺少 id";return;}
+  const box = document.getElementById("list");
+  box.innerHTML = "";
 
-  const r = await fetch("/api/getProposal?id="+encodeURIComponent(id));
-  const j = await r.json();
-  if(!j.ok){document.getElementById("main").innerHTML="加载失败";return;}
-
-  const e = j.data;
-
-  let html = "";
-  html += '<div class="card">';
-  html += '<h2>'+(e.title||"无标题")+'</h2>';
-  html += '<div style="color:#888;">状态：'+(e.status||"pending")+' | 投票：<span id="votes">'+(e.votes||0)+'</span></div>';
-  html += '<p style="margin-top:10px;line-height:1.5;">'+(e.content||"").replace(/\\n/g,"<br>")+'</p>';
-  html += '<div style="margin-top:12px;">';
-  html += '<button onclick="vote(\''+e.id+'\',1)">▲ 赞成</button>';
-  html += '<button onclick="vote(\''+e.id+'\',-1)">▼ 反对</button>';
-  html += '</div>';
-  html += '</div>';
-
-  html += '<h3>相似提案</h3><div id="similar"></div>';
-
-  document.getElementById("main").innerHTML = html;
-
-  // 加载相似提案
-  loadSimilar(e);
-}
-
-async function loadSimilar(e){
-  const txt = (e.title||"") + "\\n" + (e.content||"");
-  const rr = await fetch("/api/searchSimilar",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ text: txt, topK: 5 })
+  list.forEach(item=>{
+    box.innerHTML += `
+      <div class="card">
+        <h3>${item.title}</h3>
+        <p>${item.content.slice(0,80)}...</p>
+        <a class="btn" href="/proposal.html?id=${item.id}">查看详情</a>
+      </div>`;
   });
-  const j = await rr.json();
-
-  const list = j.result?.data || [];
-  const box = document.getElementById("similar");
-  if(list.length===0){box.innerHTML='<p style="color:#888;">无相似提案</p>';return;}
-
-  let html="";
-  list.forEach(x=>{
-    html += '<div class="card">';
-    html += '<div style="font-weight:bold;">'+(x.title||"无标题")+'</div>';
-    html += '<div style="color:#888;margin-top:6px;">相似度：'+(x.score?x.score.toFixed(4):"")+'</div>';
-    html += '<p style="margin-top:8px;">'+((x.content||"").substring(0,180))+'...</p>';
-    html += '<a href="/proposal.html?id='+encodeURIComponent(x.id)+'">查看详情</a>';
-    html += '</div>';
-  });
-
-  box.innerHTML = html;
 }
-
-async function vote(id,val){
-  const r = await fetch("/api/voteProposal",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({id:id,vote:val})
-  });
-  const j = await r.json();
-  if(!j.ok){alert("投票失败");return;}
-  document.getElementById("votes").innerHTML = j.result.now;
-}
-
 load();
 </script>
+
 </body>
 </html>
