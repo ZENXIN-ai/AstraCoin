@@ -45,5 +45,22 @@ async function analyze() {
 }
 </script>
 
-</body>
+</body<div class="container">
+  <h1>创建新提案</h1>
+
+  <form id="proposalForm">
+    <label>提案标题</label>
+    <input type="text" id="title" required />
+
+    <label>提案内容（描述）</label>
+    <textarea id="description" rows="5" required></textarea>
+
+    <label>预算金额（USD，可选）</label>
+    <input type="number" id="budget" placeholder="可不填" />
+
+    <button type="submit">提交提案</button>
+  </form>
+
+  <p id="status" style="margin-top:20px;color:#0a0;"></p>
+</div>>
 </html>
