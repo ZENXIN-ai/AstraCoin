@@ -1,39 +1,72 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>提案详情 - AstraCoin</title>
-<style>
-body{background:#0f0f23;color:#fff;font-family:Arial;padding:20px;}
-.card{background:#11131f;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);}
-a{color:#00ff88;text-decoration:none;}
-pre{white-space:pre-wrap;background:#1a1d2e;padding:15px;border-radius:10px;}
-</style>
+  <meta charset="UTF-8" />
+  <title>提案详情</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{background:#0f0f23;color:#fff;font-family:Arial;padding:16px}
+    .card{background:#11131f;padding:16px;border-radius:8px;border:1px solid rgba(255,255,255,0.06)}
+    a{color:#00ff88}
+  </style>
 </head>
-
 <body>
 
-<a href="/proposals.html">⬅ 返回提案列表</a>
+<a href="/">← 返回首页</a>
+<h1>📄 提案详情</h1>
 
-<h1>提案详情</h1>
-
-<div id="box">加载中...</div>
+<div id="content">加载中...</div>
 
 <script>
 async function load() {
-  const id = new URLSearchParams(location.search).get("id");
+  const url = new URL(window.location.href);
+  // 兼容 /proposal?id=xxx 或 /proposal.html?id=xxx
+  const id = url.searchParams.get("id");
+  if (!id) {
+    document.getElementById("content").innerHTML = "<p>无效的提案 ID</p>";
+    return;
+  }
 
-  const res = await fetch("/api/get?id=" + id);
-  const item = await res.json();
-
-  document.getElementById("box").innerHTML = `
-    <div class="card">
-      <h2>${item.title}</h2>
-      <pre>${item.content}</pre>
-    </div>
-  `;
+  try {
+    const res = await fetch("/api/get?id=" + encodeURIComponent(id));
+    const j = await res.json();
+    if (!j.ok) {
+      document.getElementById("content").innerHTML = "<p>未找到提案</p>";
+      return;
+    }
+    const p = j.proposal;
+    document.getElementById("content").innerHTML = `
+      <div class="card">
+        <h2>${escapeHtml(p.title)}</h2>
+        <p>${escapeHtml(p.description).replace(/\n/g,"<br>")}</p>
+        <p><strong>预算：</strong>${p.budget}</p>
+        <p><strong>创建时间：</strong>${new Date(p.createdAt).toLocaleString()}</p>
+        <div style="margin-top:12px;">
+          <button id="voteBtn">👍 投票</button>
+        </div>
+      </div>
+    `;
+    document.getElementById("voteBtn").addEventListener("click", async ()=> {
+      const r = await fetch("/api/voteProposal", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ id: p.id, vote: 1 })
+      });
+      const rr = await r.json();
+      if (r.ok) alert("投票成功"); else alert("投票失败：" + (rr.error||""));
+    });
+  } catch (err) {
+    document.getElementById("content").innerHTML = "<p>请求出错：" + err.message + "</p>";
+  }
 }
+
+function escapeHtml(s){ return String(s||"")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#39;"); }
+
 load();
 </script>
 
