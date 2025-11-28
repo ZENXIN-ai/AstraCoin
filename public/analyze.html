@@ -64,3 +64,44 @@ async function analyze() {
   <p id="status" style="margin-top:20px;color:#0a0;"></p>
 </div>>
 </html>
+<script>
+  const form = document.getElementById("proposalForm");
+  const status = document.getElementById("status");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    status.textContent = "提交中，请稍等…";
+
+    const title = document.getElementById("title").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const budget = document.getElementById("budget").value;
+
+    try {
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          budget
+        })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        status.style.color = "#0a0";
+        status.textContent = "提案已提交成功！";
+      } else {
+        status.style.color = "red";
+        status.textContent = "提交失败：" + data.error;
+      }
+    } catch (err) {
+      status.style.color = "red";
+      status.textContent = "网络错误，请稍后重试";
+    }
+  });
+</script>
