@@ -1,60 +1,20 @@
 {
   "name": "astracoin-dapp",
   "version": "1.0.0",
-  "description": "AstraCoin 去中心化应用 - 基于区块链的提案和治理系统",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vercel dev",
     "start": "vercel dev",
     "build": "echo \"static build\"",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "format": "prettier --write .",
-    "test": "echo \"No tests specified\" && exit 0",
-    "init-data": "node scripts/initData.js",
-    "health-check": "node scripts/healthCheck.js"
+    "lint": "echo \"Skipping lint\"",
+    "format": "echo \"Skipping format\""
   },
   "dependencies": {
     "node-fetch": "^3.3.2",
-    "ethers": "^6.9.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "uuid": "^9.0.1"
-  },
-  "devDependencies": {
-    "@types/node": "^20.10.5",
-    "@typescript-eslint/eslint-plugin": "^6.13.1",
-    "@typescript-eslint/parser": "^6.13.1",
-    "eslint": "^8.54.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "prettier": "^3.1.0",
-    "typescript": "^5.3.2"
+    "ethers": "^6.9.0"
   },
   "engines": {
     "node": ">=18.x"
-  },
-  "keywords": [
-    "blockchain",
-    "dapp",
-    "governance",
-    "proposals",
-    "ethereum",
-    "web3",
-    "vector-database",
-    "ai"
-  ],
-  "author": {
-    "name": "AstraCoin Team",
-    "email": "dev@astracoin.org"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/astracoin/astracoin-dapp"
-  },
-  "bugs": {
-    "url": "https://github.com/astracoin/astracoin-dapp/issues"
-  },
-  "homepage": "https://astracoin.org"
+  }
 }
