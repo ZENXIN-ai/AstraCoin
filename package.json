@@ -7,8 +7,7 @@
     "dev": "vercel dev",
     "start": "vercel dev",
     "build": "echo \"static build\"",
-    "lint": "echo \"Skipping lint\"",
-    "format": "echo \"Skipping format\""
+    "test:connections": "node scripts/test-connections.js"
   },
   "dependencies": {
     "node-fetch": "^3.3.2",
