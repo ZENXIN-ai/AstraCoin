@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI 提案分析器 - AstraCoin</title>
+<style>
+body { background: #0f0f23; color: #fff; font-family: Arial; padding: 20px; }
+.card { background: #11131f; padding: 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
+input, textarea {
+  width: 100%; padding: 12px; margin-top: 10px;
+  background: #1a1d2e; border: 1px solid #333; border-radius: 8px; color: #fff;
+}
+button {
+  background: #00ff88; color: #000; border: none; padding: 12px 18px;
+  border-radius: 8px; cursor: pointer; margin-top: 15px; font-weight: bold;
+}
+button:hover { background: #06ffa0; }
+.result { margin-top: 20px; padding: 15px; background: #11131f; border-radius: 8px; }
+.back { color: #00ff88; text-decoration: none; }
+</style>
+</head>
+
+<body>
+
+<a href="/index.html" class="back">← 返回首页</a>
+
+<h1>AI 提案分析器</h1>
+
+<div class="card">
+  <label>提案标题：</label>
+  <input id="title" placeholder="请输入标题">
+
+  <label style="margin-top:15px;">提案内容：</label>
+  <textarea id="content" rows="8" placeholder="请输入详细内容"></textarea>
+
+  <button onclick="analyze()">提交分析</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+async function analyze() {
+  const t = document.getElementById("title").value.trim();
+  const c = document.getElementById("content").value.trim();
+
+  if (!t || !c) {
+    alert("请输入标题与内容！");
+    return;
+  }
+
+  const box = document.getElementById("output");
+  box.innerHTML = "<div class='result'>正在分析中，请稍等...</div>";
+
+  const res = await fetch("/api/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title: t, content: c })
+  });
+
+  const j = await res.json();
+
+  if (!j.ok) {
+    box.innerHTML = "<div class='result'>AI 分析失败，请检查服务器日志。</div>";
+    return;
+  }
+
+  const p = j.proposal;
+
+  box.innerHTML = `
+    <div class="result">
+      <h3>分析完成</h3>
+      <p><b>分类：</b> ${p.category}</p>
+      <p><b>摘要：</b> ${p.summary}</p>
+      <p><b>ID：</b> ${p.id}</p>
+      <p><a style="color:#00ff88" href="/proposal.html?id=${p.id}">👉 点击查看提案详情</a></p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
