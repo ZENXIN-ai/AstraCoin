@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>治理面板 - AstraCoin</title>
+<style>
+body{background:#0f0f23;color:#fff;font-family:Arial;padding:20px;}
+.card{background:#11131f;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);margin-bottom:20px;}
+</style>
+</head>
+
+<body>
+
+<h1>📊 治理数据面板</h1>
+
+<div class="card">
+  <h3>总提案数</h3>
+  <p id="count">加载中...</p>
+</div>
+
+<script>
+async function load() {
+  const res = await fetch("/api/list");
+  const list = await res.json();
+  document.getElementById("count").textContent = list.length;
+}
+load();
+</script>
+
+</body>
+</html>
