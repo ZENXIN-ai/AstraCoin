@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>治理面板 - AstraCoin</title>
+<style>
+body{background:#0f0f23;color:#fff;font-family:Arial;padding:20px;}
+.card{background:#11131f;padding:15px;border-radius:8px;margin-bottom:15px;border:1px solid rgba(255,255,255,0.1);}
+</style>
+</head>
+
+<body>
+
+<h1>治理数据面板</h1>
+<div id="stats"></div>
+
+<h2>Top 提案（投票最多）</h2>
+<div id="top"></div>
+
+<script>
+async function load(){
+  const r = await fetch("/api/stats");
+  const j = await r.json();
+  if(!j.ok){document.getElementById("stats").innerHTML="加载失败";return;}
+
+  const s = j;
+  const box = document.getElementById("stats");
+
+  box.innerHTML = '<div class="card">'
+    + '总提案数量：'+s.total+'<br>'
+    + '状态分布：'+JSON.stringify(s.byStatus)
+    + '</div>';
+
+  const top = s.top || [];
+  const listBox = document.getElementById("top");
+  let html="";
+  top.forEach(t=>{
+    html += '<div class="card">';
+    html += '<div style="font-weight:bold;">'+(t.title||t.id)+'（'+(t.votes||0)+' 票）</div>';
+    html += '<p style="margin-top:6px;">'+((t.content||"").substring(0,180))+'...</p>';
+    html += '</div>';
+  });
+  listBox.innerHTML = html;
+}
+
+load();
+</script>
+
+</body>
+</html>
