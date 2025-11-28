@@ -16,6 +16,7 @@
       --primary-color: #3a86ff;
       --secondary-color: #8338ec;
       --ai-color: #00d4aa;
+      --zilliz-color: #4f46e5;
       --ast-color: #ff006e;
       --memory-color: #7209b7;
       --dark-color: #1a1d29;
@@ -24,6 +25,7 @@
       --card-bg: #ffffff;
       --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       --ai-gradient: linear-gradient(135deg, var(--ai-color) 0%, #0099ff 100%);
+      --zilliz-gradient: linear-gradient(135deg, var(--zilliz-color) 0%, #7c3aed 100%);
       --ast-gradient: linear-gradient(135deg, var(--ast-color) 0%, #ff6b6b 100%);
       --memory-gradient: linear-gradient(135deg, var(--memory-color) 0%, #560bad 100%);
     }
@@ -731,6 +733,114 @@
       border-bottom: none;
     }
     
+    /* Zilliz Vector Database Panel */
+    .zilliz-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    .zilliz-config {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 12px;
+    }
+    
+    .zilliz-status {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 12px;
+    }
+    
+    .zilliz-connection {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .zilliz-connected {
+      color: var(--ai-color);
+      font-weight: bold;
+    }
+    
+    .zilliz-disconnected {
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+    
+    .zilliz-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .zilliz-stat {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .zilliz-stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--zilliz-color);
+      margin-bottom: 5px;
+    }
+    
+    .zilliz-stat-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    .zilliz-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .zilliz-btn {
+      padding: 10px 15px;
+      background: var(--zilliz-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    
+    .zilliz-btn:hover {
+      background: var(--secondary-color);
+    }
+    
+    .zilliz-search {
+      margin-top: 20px;
+    }
+    
+    .zilliz-search input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    
+    .zilliz-results {
+      max-height: 200px;
+      overflow-y: auto;
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+    
     footer {
       background: var(--dark-color);
       color: white;
@@ -845,7 +955,8 @@
         padding: 20px;
       }
       
-      .training-panel {
+      .training-panel,
+      .zilliz-panel {
         grid-template-columns: 1fr;
       }
       
@@ -1033,8 +1144,12 @@
             <i class="fas fa-graduation-cap"></i>
             <span data-zh="训练数据" data-en="Training Data">Training Data</span>
           </div>
-          <div class="ai-tab" data-tab="memory">
+          <div class="ai-tab" data-tab="zilliz">
             <i class="fas fa-database"></i>
+            <span data-zh="向量数据库" data-en="Vector Database">Vector Database</span>
+          </div>
+          <div class="ai-tab" data-tab="memory">
+            <i class="fas fa-infinity"></i>
             <span data-zh="AI记忆" data-en="AI Memory">AI Memory</span>
           </div>
         </div>
@@ -1118,6 +1233,74 @@
                     <p style="font-size: 0.8rem; color: #6c757d;" data-zh="上传于2周前" data-en="Uploaded 2 weeks ago">Uploaded 2 weeks ago</p>
                   </div>
                   <span class="ast-reward">+25 AST</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Zilliz Vector Database Tab -->
+        <div class="ai-tab-content" id="zilliz-tab">
+          <div class="zilliz-panel">
+            <div class="zilliz-config">
+              <h4 data-zh="Zilliz 向量数据库配置" data-en="Zilliz Vector Database Configuration">Zilliz Vector Database Configuration</h4>
+              
+              <div class="zilliz-connection">
+                <div class="status-indicator" style="background: var(--zilliz-color);"></div>
+                <span class="zilliz-connected" data-zh="已连接" data-en="Connected">Connected</span>
+              </div>
+              
+              <div class="form-group">
+                <label data-zh="集群端点" data-en="Cluster Endpoint">Cluster Endpoint</label>
+                <input type="text" value="https://your-cluster.zilliz-cloud.com" readonly>
+              </div>
+              
+              <div class="form-group">
+                <label data-zh="API密钥" data-en="API Key">API Key</label>
+                <input type="password" value="••••••••••••••••" readonly>
+              </div>
+              
+              <div class="form-group">
+                <label data-zh="集合名称" data-en="Collection Name">Collection Name</label>
+                <input type="text" value="astracoin_dao_memory" readonly>
+              </div>
+              
+              <div class="zilliz-actions">
+                <button class="zilliz-btn" id="test-connection" data-zh="测试连接" data-en="Test Connection">Test Connection</button>
+                <button class="zilliz-btn" id="create-collection" data-zh="创建集合" data-en="Create Collection">Create Collection</button>
+                <button class="zilliz-btn" id="backup-data" data-zh="备份数据" data-en="Backup Data">Backup Data</button>
+              </div>
+            </div>
+            
+            <div class="zilliz-status">
+              <h4 data-zh="数据库状态" data-en="Database Status">Database Status</h4>
+              
+              <div class="zilliz-stats">
+                <div class="zilliz-stat">
+                  <div class="zilliz-stat-value">24,587</div>
+                  <div class="zilliz-stat-label" data-zh="向量数量" data-en="Vectors">Vectors</div>
+                </div>
+                <div class="zilliz-stat">
+                  <div class="zilliz-stat-value">768</div>
+                  <div class="zilliz-stat-label" data-zh="向量维度" data-en="Dimensions">Dimensions</div>
+                </div>
+                <div class="zilliz-stat">
+                  <div class="zilliz-stat-value">1.2GB</div>
+                  <div class="zilliz-stat-label" data-zh="存储使用" data-en="Storage">Storage</div>
+                </div>
+                <div class="zilliz-stat">
+                  <div class="zilliz-stat-value">45ms</div>
+                  <div class="zilliz-stat-label" data-zh="平均查询" data-en="Avg Query">Avg Query</div>
+                </div>
+              </div>
+              
+              <div class="zilliz-search">
+                <h5 data-zh="向量搜索" data-en="Vector Search">Vector Search</h5>
+                <input type="text" id="vector-search" placeholder="输入搜索内容..." data-zh-placeholder="输入搜索内容..." data-en-placeholder="Enter search content...">
+                <button class="zilliz-btn" id="search-vectors" style="width: 100%;" data-zh="执行搜索" data-en="Search">Search</button>
+                
+                <div class="zilliz-results" id="search-results">
+                  > 搜索结果将在此显示...
                 </div>
               </div>
             </div>
@@ -1284,11 +1467,21 @@
       
       // Update placeholder text
       const chatInput = document.getElementById('chat-input');
+      const vectorSearch = document.getElementById('vector-search');
+      
       if (chatInput) {
         if (lang === 'zh') {
           chatInput.placeholder = chatInput.getAttribute('data-zh-placeholder');
         } else if (lang === 'en') {
           chatInput.placeholder = chatInput.getAttribute('data-en-placeholder');
+        }
+      }
+      
+      if (vectorSearch) {
+        if (lang === 'zh') {
+          vectorSearch.placeholder = vectorSearch.getAttribute('data-zh-placeholder');
+        } else if (lang === 'en') {
+          vectorSearch.placeholder = vectorSearch.getAttribute('data-en-placeholder');
         }
       }
       
@@ -1377,6 +1570,49 @@
         alert(currentLanguage === 'zh' ? 
           "训练数据上传功能已触发！在实际应用中，这里将打开文件选择器。" : 
           "Training data upload triggered! In a real application, this would open a file selector.");
+      });
+      
+      // Zilliz Vector Database functionality
+      const testConnectionBtn = document.getElementById('test-connection');
+      const createCollectionBtn = document.getElementById('create-collection');
+      const backupDataBtn = document.getElementById('backup-data');
+      const searchVectorsBtn = document.getElementById('search-vectors');
+      const searchResults = document.getElementById('search-results');
+      
+      testConnectionBtn.addEventListener('click', () => {
+        searchResults.innerHTML = '> 测试Zilliz连接...\n> 连接成功！数据库状态正常';
+      });
+      
+      createCollectionBtn.addEventListener('click', () => {
+        searchResults.innerHTML = '> 创建新集合...\n> 集合 "astracoin_dao_memory" 创建成功';
+      });
+      
+      backupDataBtn.addEventListener('click', () => {
+        searchResults.innerHTML = '> 开始备份数据...\n> 备份完成！已保存到云端存储';
+      });
+      
+      searchVectorsBtn.addEventListener('click', () => {
+        const searchText = document.getElementById('vector-search').value;
+        if (!searchText) {
+          searchResults.innerHTML = '> 请输入搜索内容';
+          return;
+        }
+        
+        searchResults.innerHTML = '> 执行向量搜索...\n> 搜索: "' + searchText + '"\n\n';
+        
+        // Simulate search results
+        setTimeout(() => {
+          searchResults.innerHTML += `
+> 找到 5 个相关结果:
+1. 社区治理提案 #1247 (相似度: 0.89)
+2. AI训练指南 v2.1 (相似度: 0.76)
+3. 代币经济模型文档 (相似度: 0.72)
+4. 社区反馈报告 Q3 (相似度: 0.68)
+5. 技术白皮书第3章 (相似度: 0.65)
+
+> 搜索完成 (耗时: 42ms)
+          `;
+        }, 800);
       });
     }
     
