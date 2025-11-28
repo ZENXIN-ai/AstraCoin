@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { embedText } from "../../lib/ai_proxy.js";  
-import { milvusClient, collectionName } from "../../lib/milvus.js";
+import { embedText } from "../../../lib/ai_proxy.js";
+import { milvusClient, collectionName } from "../../../lib/milvus.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -11,13 +11,13 @@ export default async function handler(req, res) {
   const { title, description, budget } = req.body;
 
   if (!title || !description) {
-    return res.status(400).json({ error: "缺少必要字段：标题 或 内容" });
+    return res.status(400).json({ error: "缺少标题或内容" });
   }
 
   try {
-    // 1️⃣ 生成 embedding（DeepSeek）
-    const textToEmbed = `${title}\n${description}`;
-    const embedding = await embedText(textToEmbed);
+    // 1️⃣ 创建向量 embedding
+    const text = `${title}\n${description}`;
+    const vector = await embedText(text);
 
     // 2️⃣ 创建提案对象
     const proposal = {
@@ -25,38 +25,39 @@ export default async function handler(req, res) {
       title,
       description,
       budget: budget || 0,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toISOString()
     };
 
-    // 3️⃣ 写入本地 JSON 数据库（提案列表）
-    const proposalsPath = path.join(process.cwd(), "data", "proposals.json");
-    let list = [];
+    // 3️⃣ 写入 JSON 数据库
+    const filePath = path.join(process.cwd(), "data", "proposals.json");
 
-    if (fs.existsSync(proposalsPath)) {
-      list = JSON.parse(fs.readFileSync(proposalsPath, "utf8"));
+    let list = [];
+    if (fs.existsSync(filePath)) {
+      list = JSON.parse(fs.readFileSync(filePath, "utf8"));
     }
 
     list.push(proposal);
-    fs.writeFileSync(proposalsPath, JSON.stringify(list, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(list, null, 2));
 
-    // 4️⃣ 写入 Zilliz（Milvus 向量库）
+    // 4️⃣ 写入向量数据库（Zilliz）
     await milvusClient.insert({
       collection_name: collectionName,
       data: [
         {
           id: proposal.id,
-          vector: embedding
+          vector
         }
       ]
     });
 
     return res.status(200).json({
+      ok: true,
       message: "提案提交成功",
       proposalId: proposal.id
     });
 
   } catch (err) {
     console.error("Analyze Error:", err);
-    return res.status(500).json({ error: "服务器错误：" + err.message });
+    return res.status(500).json({ error: err.message });
   }
 }
