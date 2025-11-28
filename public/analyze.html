@@ -1,107 +1,450 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AI 提案分析器 - AstraCoin</title>
-<style>
-body{background:#0f0f23;color:#fff;font-family:Arial;padding:20px;}
-.card{background:#11131f;padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);}
-input,textarea{width:100%;padding:12px;border-radius:8px;background:#1a1d2e;border:1px solid #333;color:#fff;margin-top:10px;}
-button{margin-top:15px;padding:12px;width:100%;background:#00ff88;color:#000;border:none;font-size:16px;border-radius:8px;}
-button:hover{opacity:0.85;}
-pre{white-space:pre-wrap;background:#1a1d2e;padding:15px;border-radius:10px;margin-top:20px;}
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AI 提案分析器 - AstraCoin</title>
+  <style>
+    :root {
+      --primary-color: #00ff88;
+      --bg-dark: #0f0f23;
+      --card-bg: #11131f;
+      --input-bg: #1a1d2e;
+      --text-light: #ffffff;
+      --text-dim: #cccccc;
+      --error-color: #ff4444;
+      --success-color: #00ff88;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--primary-color), #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 25px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card h2 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      background: var(--input-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
+    }
+    
+    button {
+      margin-top: 15px;
+      padding: 14px 24px;
+      width: 100%;
+      background: var(--primary-color);
+      color: #000;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+    }
+    
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .result-container {
+      margin-top: 30px;
+    }
+    
+    .result-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    
+    .result-title svg {
+      margin-right: 10px;
+    }
+    
+    pre {
+      white-space: pre-wrap;
+      background: var(--input-bg);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-dim);
+    }
+    
+    .loading:after {
+      content: '...';
+      animation: dots 1.5s steps(5, end) infinite;
+    }
+    
+    @keyframes dots {
+      0%, 20% { color: rgba(255,255,255,0); text-shadow: .25em 0 0 rgba(255,255,255,0), .5em 0 0 rgba(255,255,255,0); }
+      40% { color: white; text-shadow: .25em 0 0 rgba(255,255,255,0), .5em 0 0 rgba(255,255,255,0); }
+      60% { text-shadow: .25em 0 0 white, .5em 0 0 rgba(255,255,255,0); }
+      80%, 100% { text-shadow: .25em 0 0 white, .5em 0 0 white; }
+    }
+    
+    .error {
+      color: var(--error-color);
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid rgba(255, 68, 68, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .success {
+      color: var(--success-color);
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .tab {
+      padding: 12px 24px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .tab.active {
+      border-bottom: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="container">
+    <header>
+      <h1>🧠 AI 提案分析器</h1>
+      <p class="subtitle">使用人工智能分析您的提案，获取专业建议和风险评估</p>
+    </header>
 
-<h1>🧠 AI 提案分析器</h1>
+    <div class="tabs">
+      <div class="tab active" data-tab="analyze">提案分析</div>
+      <div class="tab" data-tab="create">创建提案</div>
+    </div>
 
-<div class="card">
-  <label>提案标题</label>
-  <input id="title" placeholder="输入标题"/>
+    <!-- 提案分析标签页 -->
+    <div class="tab-content active" id="analyze-tab">
+      <div class="card">
+        <h2>📋 提交提案分析</h2>
+        
+        <div class="form-group">
+          <label for="analyze-title">提案标题</label>
+          <input type="text" id="analyze-title" placeholder="输入提案标题" />
+        </div>
+        
+        <div class="form-group">
+          <label for="analyze-content">提案内容</label>
+          <textarea id="analyze-content" rows="6" placeholder="详细描述您的提案内容..."></textarea>
+        </div>
+        
+        <button id="analyze-btn" onclick="analyzeProposal()">提交给 AI 分析</button>
+        
+        <div class="result-container">
+          <div class="result-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3>分析结果</h3>
+          </div>
+          <pre id="analyze-result">等待分析结果...</pre>
+        </div>
+      </div>
+    </div>
 
-  <label>提案内容</label>
-  <textarea id="content" rows="5" placeholder="输入提案内容"></textarea>
+    <!-- 创建提案标签页 -->
+    <div class="tab-content" id="create-tab">
+      <div class="card">
+        <h2>📝 创建新提案</h2>
+        
+        <form id="proposal-form">
+          <div class="form-group">
+            <label for="create-title">提案标题</label>
+            <input type="text" id="create-title" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="create-description">提案内容（描述）</label>
+            <textarea id="create-description" rows="5" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="create-budget">预算金额（USD，可选）</label>
+            <input type="number" id="create-budget" placeholder="可不填" min="0" step="0.01" />
+          </div>
+          
+          <button type="submit">提交提案</button>
+        </form>
+        
+        <div id="create-status"></div>
+      </div>
+    </div>
+  </div>
 
-  <button onclick="analyze()">提交给 AI 分析</button>
-</div>
-
-<pre id="result">等待分析...</pre>
-
-<script>
-async function analyze() {
-  const title = document.getElementById("title").value;
-  const content = document.getElementById("content").value;
-
-  const res = await fetch("/api/analyze", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ title, content })
-  });
-
-  document.getElementById("result").textContent = await res.text();
-}
-</script>
-
-</body<div class="container">
-  <h1>创建新提案</h1>
-
-  <form id="proposalForm">
-    <label>提案标题</label>
-    <input type="text" id="title" required />
-
-    <label>提案内容（描述）</label>
-    <textarea id="description" rows="5" required></textarea>
-
-    <label>预算金额（USD，可选）</label>
-    <input type="number" id="budget" placeholder="可不填" />
-
-    <button type="submit">提交提案</button>
-  </form>
-
-  <p id="status" style="margin-top:20px;color:#0a0;"></p>
-</div>>
-</html>
-<script>
-  const form = document.getElementById("proposalForm");
-  const status = document.getElementById("status");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    status.textContent = "提交中，请稍等…";
-
-    const title = document.getElementById("title").value.trim();
-    const description = document.getElementById("description").value.trim();
-    const budget = document.getElementById("budget").value;
-
-    try {
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          title,
-          description,
-          budget
-        })
+  <script>
+    // 标签页切换功能
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        // 移除所有标签和内容的激活状态
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        // 激活当前标签和内容
+        this.classList.add('active');
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(`${tabId}-tab`).classList.add('active');
       });
+    });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        status.style.color = "#0a0";
-        status.textContent = "提案已提交成功！";
-      } else {
-        status.style.color = "red";
-        status.textContent = "提交失败：" + data.error;
+    // 提案分析功能
+    async function analyzeProposal() {
+      const title = document.getElementById('analyze-title').value.trim();
+      const content = document.getElementById('analyze-content').value.trim();
+      const resultElement = document.getElementById('analyze-result');
+      const analyzeBtn = document.getElementById('analyze-btn');
+      
+      // 验证输入
+      if (!title || !content) {
+        showError(resultElement, '请填写提案标题和内容');
+        return;
       }
-    } catch (err) {
-      status.style.color = "red";
-      status.textContent = "网络错误，请稍后重试";
+      
+      // 显示加载状态
+      analyzeBtn.disabled = true;
+      analyzeBtn.textContent = '分析中...';
+      resultElement.textContent = 'AI正在分析您的提案，请稍候...';
+      resultElement.className = 'loading';
+      
+      try {
+        const response = await fetch("/api/analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ 
+            title: escapeHtml(title), 
+            content: escapeHtml(content) 
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`服务器错误: ${response.status}`);
+        }
+        
+        const result = await response.text();
+        resultElement.textContent = result;
+        resultElement.className = '';
+        
+      } catch (error) {
+        console.error('分析失败:', error);
+        showError(resultElement, `分析失败: ${error.message}`);
+      } finally {
+        // 恢复按钮状态
+        analyzeBtn.disabled = false;
+        analyzeBtn.textContent = '提交给 AI 分析';
+      }
     }
-  });
-</script>
+
+    // 创建提案功能
+    document.getElementById('proposal-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const statusElement = document.getElementById('create-status');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      
+      const title = document.getElementById('create-title').value.trim();
+      const description = document.getElementById('create-description').value.trim();
+      const budget = document.getElementById('create-budget').value;
+      
+      // 验证输入
+      if (!title || !description) {
+        showError(statusElement, '请填写提案标题和内容');
+        return;
+      }
+      
+      // 显示加载状态
+      submitBtn.disabled = true;
+      submitBtn.textContent = '提交中...';
+      statusElement.textContent = '提交中，请稍等...';
+      statusElement.className = 'loading';
+      
+      try {
+        const response = await fetch("/api/analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title: escapeHtml(title),
+            description: escapeHtml(description),
+            budget: budget ? parseFloat(budget) : null
+          })
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `提交失败: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.ok) {
+          showSuccess(statusElement, "提案已提交成功！");
+          // 清空表单
+          document.getElementById('proposal-form').reset();
+        } else {
+          throw new Error(data.error || "提交失败");
+        }
+        
+      } catch (error) {
+        console.error('提交失败:', error);
+        showError(statusElement, `提交失败: ${error.message}`);
+      } finally {
+        // 恢复按钮状态
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交提案';
+      }
+    });
+
+    // 工具函数
+    function showError(element, message) {
+      element.textContent = message;
+      element.className = 'error';
+    }
+    
+    function showSuccess(element, message) {
+      element.textContent = message;
+      element.className = 'success';
+    }
+    
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
