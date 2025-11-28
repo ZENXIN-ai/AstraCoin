@@ -1,55 +1,62 @@
-// pages/api/analyze.js
-import { createCollectionIfNotExists, insertVectors, searchVectors } from "../../lib/milvus.js";
-import { getEmbedding, analyzeWithLLM } from "../../lib/ai_proxy.js";
+import fs from "fs";
+import path from "path";
+import { embedText } from "../../lib/ai_proxy.js";  
+import { milvusClient, collectionName } from "../../lib/milvus.js";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const { title, description, budget } = req.body;
+
+  if (!title || !description) {
+    return res.status(400).json({ error: "缺少必要字段：标题 或 内容" });
+  }
+
   try {
-    const { title, content } = req.body;
-    if (!title || !content) return res.status(400).json({ error: "title/content required" });
+    // 1️⃣ 生成 embedding（DeepSeek）
+    const textToEmbed = `${title}\n${description}`;
+    const embedding = await embedText(textToEmbed);
 
-    await createCollectionIfNotExists("proposals", 1536);
+    // 2️⃣ 创建提案对象
+    const proposal = {
+      id: Date.now().toString(),
+      title,
+      description,
+      budget: budget || 0,
+      createdAt: new Date().toISOString(),
+    };
 
-    // 1. LLM classification & suggestions
-    let llmResult = { summary: "", category: "general", risk: "low", suggestions: [] };
-    try {
-      llmResult = await analyzeWithLLM(title, content);
-    } catch (e) {
-      console.warn("LLM analysis failed, fallback to keywords", e.message);
-      // fallback to keyword heuristics
-      const lower = `${title} ${content}`.toLowerCase();
-      if (lower.includes("治理") || lower.includes("dao")) llmResult.category = "governance";
-      if (lower.includes("代币") || lower.includes("token")) llmResult.category = "tokenomics";
-      if (lower.includes("漏洞") || lower.includes("分叉")) llmResult.risk = "high";
-      llmResult.summary = (title + " " + content).slice(0, 300);
+    // 3️⃣ 写入本地 JSON 数据库（提案列表）
+    const proposalsPath = path.join(process.cwd(), "data", "proposals.json");
+    let list = [];
+
+    if (fs.existsSync(proposalsPath)) {
+      list = JSON.parse(fs.readFileSync(proposalsPath, "utf8"));
     }
 
-    // 2. embedding + search
-    const vector = await getEmbedding(`${title}\n${content}`);
-    const search = await searchVectors("proposals", vector, 5);
+    list.push(proposal);
+    fs.writeFileSync(proposalsPath, JSON.stringify(list, null, 2));
 
-    // 3. insert this proposal (with category/risk from llm)
-    const id = `p_${Date.now()}`;
-    await insertVectors("proposals", [{
-      id,
-      title,
-      content,
-      category: llmResult.category || "general",
-      risk: llmResult.risk || "low",
-      status: "pending",
-      votes: 0,
-      vector
-    }]);
+    // 4️⃣ 写入 Zilliz（Milvus 向量库）
+    await milvusClient.insert({
+      collection_name: collectionName,
+      data: [
+        {
+          id: proposal.id,
+          vector: embedding
+        }
+      ]
+    });
 
-    return res.json({
-      ok: true,
-      id,
-      ai: llmResult,
-      search
+    return res.status(200).json({
+      message: "提案提交成功",
+      proposalId: proposal.id
     });
 
   } catch (err) {
-    console.error("analyze error", err);
-    return res.status(500).json({ error: err.message });
+    console.error("Analyze Error:", err);
+    return res.status(500).json({ error: "服务器错误：" + err.message });
   }
 }
