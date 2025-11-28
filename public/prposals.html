@@ -3,60 +3,247 @@
 <head>
   <meta charset="UTF-8">
   <title>AstraCoin DAO - 提案列表</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: Arial; padding: 20px; background: #f0f0f0; }
-    h1 { text-align: center; }
+    body { 
+      font-family: Arial, sans-serif; 
+      padding: 20px; 
+      background: #f0f0f0; 
+      margin: 0;
+    }
+    h1 { 
+      text-align: center; 
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
     .card {
-      padding: 15px;
+      padding: 20px;
       background: white;
       margin-bottom: 15px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-left: 4px solid #007bff;
     }
-    .title { font-size: 18px; font-weight: bold; }
-    .meta { color: gray; font-size: 13px; }
-    .summary { margin-top: 8px; }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .title { 
+      font-size: 18px; 
+      font-weight: bold; 
+      margin-bottom: 8px;
+      color: #333;
+    }
+    .meta { 
+      color: #666; 
+      font-size: 13px; 
+      margin-bottom: 8px;
+    }
+    .summary { 
+      margin-top: 8px; 
+      color: #555;
+      line-height: 1.5;
+    }
     .btn {
       display: inline-block;
       margin-top: 10px;
-      padding: 8px 12px;
-      background: #333;
+      padding: 8px 16px;
+      background: #007bff;
       color: white;
       border-radius: 6px;
       text-decoration: none;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+    .error {
+      text-align: center;
+      padding: 40px;
+      color: #dc3545;
+      background: #f8d7da;
+      border-radius: 8px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    .status-active { background: #d4edda; color: #155724; }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-closed { background: #f8d7da; color: #721c24; }
+    .filters {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      margin: 0 5px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background: #007bff;
+      color: white;
+      border-color: #007bff;
     }
   </style>
 </head>
 
 <body>
+  <div class="container">
+    <h1>🗳️ AstraCoin DAO - 提案列表</h1>
+    
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterProposals('all')">全部</button>
+      <button class="filter-btn" onclick="filterProposals('active')">进行中</button>
+      <button class="filter-btn" onclick="filterProposals('pending')">待开始</button>
+      <button class="filter-btn" onclick="filterProposals('closed')">已结束</button>
+    </div>
 
-<h1>全部提案</h1>
+    <div id="proposals-list">
+      <div class="loading">加载提案列表中...</div>
+    </div>
+  </div>
 
-<div id="container"></div>
+  <script>
+    let allProposals = [];
+    let currentFilter = 'all';
 
-<script>
-async function loadList() {
-  const res = await fetch("/api/listProposals");
-  const list = await res.json();
+    async function loadProposals() {
+      const listElement = document.getElementById('proposals-list');
+      
+      try {
+        listElement.innerHTML = '<div class="loading">加载提案列表中...</div>';
+        
+        const response = await fetch('/api/list');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!Array.isArray(data)) {
+          throw new Error('Invalid data format');
+        }
+        
+        allProposals = data;
+        renderProposals();
+        
+      } catch (error) {
+        console.error('加载提案失败:', error);
+        listElement.innerHTML = `
+          <div class="error">
+            <p>加载提案列表失败</p>
+            <button class="btn" onclick="loadProposals()" style="background: #dc3545;">重试</button>
+          </div>
+        `;
+      }
+    }
 
-  let html = "";
+    function renderProposals() {
+      const listElement = document.getElementById('proposals-list');
+      
+      if (allProposals.length === 0) {
+        listElement.innerHTML = '<div class="loading">暂无提案</div>';
+        return;
+      }
 
-  list.forEach(p => {
-    html += `
-      <div class="card">
-        <div class="title">${p.title}</div>
-        <div class="meta">创建于：${new Date(p.created_at).toLocaleString()}</div>
-        <div class="summary">${p.summary}</div>
-        <a class="btn" href="proposal.html?id=${p.id}">查看详情</a>
-      </div>
-    `;
-  });
+      const filteredProposals = allProposals.filter(proposal => {
+        if (currentFilter === 'all') return true;
+        return proposal.status === currentFilter;
+      });
 
-  document.getElementById("container").innerHTML = html;
-}
+      if (filteredProposals.length === 0) {
+        listElement.innerHTML = `<div class="loading">没有${getFilterText()}的提案</div>`;
+        return;
+      }
 
-loadList();
-</script>
+      listElement.innerHTML = filteredProposals.map(proposal => `
+        <div class="card" data-status="${proposal.status}">
+          <div class="title">
+            ${escapeHtml(proposal.title)}
+            <span class="status-badge status-${proposal.status}">
+              ${getStatusText(proposal.status)}
+            </span>
+          </div>
+          <div class="meta">
+            创建时间: ${new Date(proposal.created_at).toLocaleString('zh-CN')} 
+            | 作者: ${escapeHtml(proposal.author || '匿名')}
+            ${proposal.votes ? `| 投票数: ${proposal.votes}` : ''}
+          </div>
+          <div class="summary">
+            ${escapeHtml(proposal.summary || proposal.content?.substring(0, 150) || '无描述')}...
+          </div>
+          <a href="/proposal.html?id=${proposal.id}" class="btn">查看详情</a>
+        </div>
+      `).join('');
+    }
 
+    function filterProposals(filter) {
+      currentFilter = filter;
+      
+      // 更新按钮状态
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      renderProposals();
+    }
+
+    function getStatusText(status) {
+      const statusMap = {
+        'active': '进行中',
+        'pending': '待开始', 
+        'closed': '已结束',
+        'draft': '草稿'
+      };
+      return statusMap[status] || status;
+    }
+
+    function getFilterText() {
+      const filterMap = {
+        'all': '全部',
+        'active': '进行中',
+        'pending': '待开始',
+        'closed': '已结束'
+      };
+      return filterMap[currentFilter] || currentFilter;
+    }
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // 页面加载时获取提案列表
+    document.addEventListener('DOMContentLoaded', loadProposals);
+
+    // 可选：定期刷新数据
+    // setInterval(loadProposals, 30000); // 每30秒刷新
+  </script>
 </body>
 </html>
