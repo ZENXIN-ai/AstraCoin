@@ -1,7 +1,18 @@
 {
   "version": 2,
-  "public": "public",
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" }
-  ]
+  "builds": [
+    {
+      "src": "**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
