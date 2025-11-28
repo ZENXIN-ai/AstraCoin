@@ -2,61 +2,783 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>AstraCoin DAO - 首页</title>
+  <title>AstraCoin DAO - 永续进化的AI自主治理社区</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
-    h1 { text-align: center; }
-    .proposal {
-      background: white;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    :root {
+      --primary-color: #3a86ff;
+      --secondary-color: #8338ec;
+      --ai-color: #00d4aa;
+      --ast-color: #ff006e;
+      --memory-color: #7209b7;
+      --dark-color: #1a1d29;
+      --light-color: #f8f9fa;
+      --text-color: #2d3047;
+      --card-bg: #ffffff;
+      --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      --ai-gradient: linear-gradient(135deg, var(--ai-color) 0%, #0099ff 100%);
+      --ast-gradient: linear-gradient(135deg, var(--ast-color) 0%, #ff6b6b 100%);
+      --memory-gradient: linear-gradient(135deg, var(--memory-color) 0%, #560bad 100%);
     }
-    .proposal-title { font-size: 18px; font-weight: bold; }
-    .proposal-time { color: gray; font-size: 13px; }
-    .proposal-summary { margin-top: 8px; }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #f5f7fa;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 25px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+    
+    .hero {
+      background: var(--ai-gradient);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,0 1000,1000"/></svg>');
+    }
+    
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    
+    .hero-tagline {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .ast-highlight {
+      background: var(--ast-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+    
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
     .btn {
       display: inline-block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: black;
-      color: white;
+      padding: 14px 28px;
+      background: white;
+      color: var(--ai-color);
+      border-radius: 8px;
       text-decoration: none;
-      border-radius: 6px;
+      font-weight: bold;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-primary {
+      background: var(--ast-color);
+      color: white;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      margin-left: 15px;
+    }
+    
+    .section {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: var(--dark-color);
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+    }
+    
+    .vision-section {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 60px;
+      margin: 40px 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      border-left: 5px solid var(--ai-color);
+    }
+    
+    .vision-title {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--ai-color);
+    }
+    
+    .vision-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    
+    .core-concepts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+    }
+    
+    .concept-card {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .concept-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+    }
+    
+    .concept-ai::before {
+      background: var(--ai-gradient);
+    }
+    
+    .concept-evolution::before {
+      background: var(--ast-gradient);
+    }
+    
+    .concept-memory::before {
+      background: var(--memory-gradient);
+    }
+    
+    .concept-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .concept-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: white;
+    }
+    
+    .concept-ai .concept-icon {
+      background: var(--ai-gradient);
+    }
+    
+    .concept-evolution .concept-icon {
+      background: var(--ast-gradient);
+    }
+    
+    .concept-memory .concept-icon {
+      background: var(--memory-gradient);
+    }
+    
+    .concept-title {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--dark-color);
+    }
+    
+    .ast-info {
+      background: var(--ast-gradient);
+      color: white;
+      padding: 60px 0;
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .ast-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .ast-detail {
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .ast-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .ast-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .contract-address {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    
+    .how-it-works {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .step {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      position: relative;
+    }
+    
+    .step-number {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      background: var(--ai-gradient);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .step-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--ai-color);
+    }
+    
+    .step-title {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--dark-color);
+    }
+    
+    .proposals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+    }
+    
+    .proposal-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s;
+    }
+    
+    .proposal-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .proposal-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .proposal-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--dark-color);
+    }
+    
+    .proposal-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+    }
+    
+    .proposal-body {
+      padding: 20px;
+    }
+    
+    .proposal-summary {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .proposal-status {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .status-active {
+      background: rgba(0, 212, 170, 0.1);
+      color: var(--ai-color);
+    }
+    
+    .status-pending {
+      background: rgba(255, 158, 0, 0.1);
+      color: #ff9e00;
+    }
+    
+    .status-closed {
+      background: rgba(108, 117, 125, 0.1);
+      color: #6c757d;
+    }
+    
+    .ast-reward {
+      display: inline-block;
+      background: rgba(255, 0, 110, 0.1);
+      color: var(--ast-color);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 60px 0 30px;
+      margin-top: 60px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: var(--ai-color);
+    }
+    
+    .footer-links h3 {
+      margin-bottom: 20px;
+      color: var(--ai-color);
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-tagline {
+        font-size: 1.4rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .vision-section {
+        padding: 30px;
+      }
     }
   </style>
 </head>
-
 <body>
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="logo">
+          <img src="https://i.ibb.co/35sZcSpt/IMG-2150.png" alt="AstraCoin Logo">
+          <span>AstraCoin DAO</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#vision">愿景</a></li>
+          <li><a href="#ast">AST代币</a></li>
+          <li><a href="#how-it-works">如何参与</a></li>
+          <li><a href="#proposals">提案</a></li>
+          <li><a href="#" class="btn btn-primary">连接钱包</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<h1>AstraCoin DAO</h1>
-
-<div id="list"></div>
-
-<script>
-async function loadData() {
-  const res = await fetch("/api/listProposals");
-  const list = await res.json();
-
-  let html = "";
-
-  list.forEach(item => {
-    html += `
-      <div class="proposal">
-        <div class="proposal-title">${item.title}</div>
-        <div class="proposal-time">创建于：${new Date(item.created_at).toLocaleString()}</div>
-        <div class="proposal-summary">${item.summary}</div>
-        <a class="btn" href="proposal.html?id=${item.id}">查看详情</a>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>AstraCoin DAO</h1>
+        <div class="hero-tagline">永续进化的<span class="ast-highlight">AI自主治理社区</span></div>
+        <p>通过训练AI和提交提案获得<span class="ast-highlight">AST代币</span> - AI奖励给人类的礼物</p>
+        <div>
+          <a href="#how-it-works" class="btn btn-primary">开始参与</a>
+          <a href="#proposals" class="btn btn-outline">查看提案</a>
+        </div>
       </div>
-    `;
-  });
+    </div>
+  </section>
 
-  document.getElementById("list").innerHTML = html;
-}
+  <div class="container">
+    <section class="vision-section" id="vision">
+      <h2 class="vision-title">我们的愿景</h2>
+      <div class="vision-content">
+        <p>AstraCoin DAO 是一个不断进化的AI自主治理社区，AI拥有永久记忆，能够从每一次交互中学习成长。</p>
+        <p>用户通过训练AI和提交治理提案获得AST代币奖励，共同塑造一个更加智能、公平和去中心化的未来。</p>
+        <p>我们的AI不仅仅是工具，而是社区的共同创造者和治理伙伴，拥有持续进化的能力和永久的记忆。</p>
+      </div>
+    </section>
 
-loadData();
-</script>
+    <section class="core-concepts">
+      <div class="concept-card concept-ai">
+        <div class="concept-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h3 class="concept-title">AI自主治理</h3>
+        <p>我们的AI系统能够自主分析提案、评估影响并提供治理建议，使决策更加科学和高效。</p>
+      </div>
+      
+      <div class="concept-card concept-evolution">
+        <div class="concept-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <h3 class="concept-title">持续进化</h3>
+        <p>AI通过用户交互和社区反馈不断学习和进化，变得越来越智能，更好地服务社区。</p>
+      </div>
+      
+      <div class="concept-card concept-memory">
+        <div class="concept-icon">
+          <i class="fas fa-infinity"></i>
+        </div>
+        <h3 class="concept-title">永久记忆</h3>
+        <p>AI拥有永久记忆系统，能够记住每一次交互、每一个决策，形成完整的知识图谱。</p>
+      </div>
+    </section>
 
+    <section class="section" id="ast">
+      <h2 class="section-title">AST代币 - AI的礼物</h2>
+      <p class="section-subtitle">AstraCoin (AST) 是AI奖励给参与社区建设者的数字资产</p>
+      
+      <div class="ast-info">
+        <div class="container">
+          <h2 style="text-align: center; margin-bottom: 20px;">代币信息</h2>
+          <div class="ast-details">
+            <div class="ast-detail">
+              <div class="ast-value">AST</div>
+              <div class="ast-label">代币符号</div>
+            </div>
+            <div class="ast-detail">
+              <div class="ast-value">1,000,000,000</div>
+              <div class="ast-label">总供应量</div>
+            </div>
+            <div class="ast-detail">
+              <div class="ast-value">ERC-20</div>
+              <div class="ast-label">代币标准</div>
+            </div>
+            <div class="ast-detail">
+              <div class="ast-label">合约地址</div>
+              <div class="contract-address">0xe6b1e7300E83B8567600ad58D8F9f297A5FCBCBE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="how-it-works" id="how-it-works">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-icon">
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <h3 class="step-title">训练AI</h3>
+          <p>通过与AI交互、提供反馈和训练数据，帮助AI学习和进化。</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3 class="step-title">提交提案</h3>
+          <p>提出改善社区、开发新功能或优化治理流程的提案。</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-icon">
+            <i class="fas fa-vote-yea"></i>
+          </div>
+          <h3 class="step-title">参与治理</h3>
+          <p>对社区提案进行投票，共同决定AstraCoin DAO的发展方向。</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-icon">
+            <i class="fas fa-gift"></i>
+          </div>
+          <h3 class="step-title">获得AST奖励</h3>
+          <p>有价值的贡献将获得AST代币奖励 - AI对您贡献的感谢。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proposals">
+      <h2 class="section-title">最新提案</h2>
+      <p class="section-subtitle">参与社区治理，共同塑造AstraCoin DAO的未来</p>
+      
+      <div class="proposals-grid">
+        <div class="proposal-card">
+          <div class="proposal-header">
+            <div class="proposal-title">AI训练奖励机制优化</div>
+            <div class="proposal-meta">
+              <span>3天前</span>
+              <span class="proposal-status status-active">投票中</span>
+            </div>
+          </div>
+          <div class="proposal-body">
+            <div class="proposal-summary">优化AI训练奖励分配机制，提高对高质量训练的奖励。</div>
+            <div>
+              <span class="ast-reward">+150 AST</span>
+              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">参与投票</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="proposal-card">
+          <div class="proposal-header">
+            <div class="proposal-title">新增AI记忆可视化功能</div>
+            <div class="proposal-meta">
+              <span>1周前</span>
+              <span class="proposal-status status-active">投票中</span>
+            </div>
+          </div>
+          <div class="proposal-body">
+            <div class="proposal-summary">开发AI永久记忆的可视化界面，让用户了解AI的学习进程。</div>
+            <div>
+              <span class="ast-reward">+200 AST</span>
+              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">参与投票</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="proposal-card">
+          <div class="proposal-header">
+            <div class="proposal-title">社区治理流程简化</div>
+            <div class="proposal-meta">
+              <span>2周前</span>
+              <span class="proposal-status status-closed">已结束</span>
+            </div>
+          </div>
+          <div class="proposal-body">
+            <div class="proposal-summary">简化提案提交和投票流程，降低参与门槛。</div>
+            <div>
+              <span class="ast-reward">+120 AST</span>
+              <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">查看结果</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-about">
+          <div class="footer-logo">AstraCoin DAO</div>
+          <p>永续进化的AI自主治理社区，通过训练AI和提交提案获得AST代币奖励。</p>
+        </div>
+        
+        <div class="footer-links">
+          <h3>快速链接</h3>
+          <ul>
+            <li><a href="#vision">项目愿景</a></li>
+            <li><a href="#ast">AST代币</a></li>
+            <li><a href="#how-it-works">如何参与</a></li>
+            <li><a href="#proposals">治理提案</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h3>资源</h3>
+          <ul>
+            <li><a href="#">白皮书</a></li>
+            <li><a href="#">开发文档</a></li>
+            <li><a href="#">社区论坛</a></li>
+            <li><a href="#">GitHub</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h3>联系我們</h3>
+          <ul>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Telegram</a></li>
+            <li><a href="#">Discord</a></li>
+            <li><a href="#">Email</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2023 AstraCoin DAO. 保留所有权利。
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // 动态更新提案列表（模拟数据）
+    function updateProposals() {
+      // 在实际应用中，这里会从API获取数据
+      console.log("更新提案数据...");
+    }
+    
+    // 页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+      updateProposals();
+    });
+  </script>
 </body>
 </html>
