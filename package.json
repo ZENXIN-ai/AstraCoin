@@ -1,0 +1,17 @@
+{
+  "name": "astracoin-dapp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev",
+    "dev": "vercel dev",
+    "build": "echo 'static site - no build step'"
+  },
+  "dependencies": {
+    "node-fetch": "^3.4.1",
+    "ethers": "^6.9.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
