@@ -1,1 +1,196 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "关于改进社区治理机制的提案",
+    "content": "我们建议引入新的投票机制，包括二次投票和委托投票功能，以提高社区决策的效率和参与度。具体实施包括：1. 开发二次投票智能合约；2. 创建委托投票界面；3. 设立治理委员会监督机制。预计需要3个月完成开发部署。",
+    "description": "改进社区治理机制，引入二次投票和委托投票",
+    "summary": "提案旨在通过引入二次投票和委托投票机制来提升社区治理效率，预计3个月完成开发部署...",
+    "budget": 5000,
+    "status": "pending",
+    "category": "governance",
+    "risk": "medium",
+    "votes": 15,
+    "vector": [0.12, -0.05, 0.33, 0.21, -0.44, 0.08, 0.15, -0.29, 0.37, -0.11],
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-20T14:25:00.000Z",
+    "created_by": "0x742d35Cc6634C0532925a3b8D4B5A3B8D5B3B8D5",
+    "voters": [
+      {
+        "address": "0x89235Cc6634C0532925a3b8D4B5A3B8D5B3B8D5a",
+        "vote": 1,
+        "timestamp": "2024-01-16T09:15:00.000Z"
+      },
+      {
+        "address": "0x99235Cc6634C0532925a3b8D4B5A3B8D5B3B8D5b",
+        "vote": 1,
+        "timestamp": "2024-01-17T11:20:00.000Z"
+      }
+    ],
+    "analysis": {
+      "summary": "该提案针对社区治理效率问题提出了具体的技术解决方案，包括二次投票和委托投票机制，实施路径清晰。",
+      "category": "governance",
+      "risk": "medium",
+      "suggestions": [
+        "建议先进行小范围测试",
+        "考虑设置投票权重限制",
+        "增加实施进度透明度"
+      ],
+      "confidence": 0.85,
+      "analyzed_at": "2024-01-15T11:00:00.000Z"
+    },
+    "milvus_id": "proposal_1",
+    "tags": ["治理", "投票", "社区"]
+  },
+  {
+    "id": 2,
+    "title": "代币经济模型优化方案",
+    "content": "当前的代币经济模型存在通胀率过高的问题，我们建议调整代币释放曲线，减少早期通胀压力，同时增加staking奖励以激励长期持有。具体调整包括：1. 将年通胀率从15%降至8%；2. 增加锁仓奖励机制；3. 设立生态发展基金。",
+    "description": "优化代币经济模型，降低通胀率，增加staking奖励",
+    "summary": "针对代币经济模型通胀率过高的问题，提出调整释放曲线和增加staking奖励的优化方案...",
+    "budget": 8000,
+    "status": "approved",
+    "category": "tokenomics",
+    "risk": "high",
+    "votes": 32,
+    "vector": [0.08, -0.15, 0.42, 0.18, -0.33, 0.12, 0.22, -0.25, 0.29, -0.18],
+    "createdAt": "2024-01-10T08:15:00.000Z",
+    "updatedAt": "2024-01-18T16:40:00.000Z",
+    "created_by": "0x842d35Cc6634C0532925a3b8D4B5A3B8D5B3B8D5",
+    "voters": [
+      {
+        "address": "0x79235Cc6634C0532925a3b8D4B5A3B8D5B3B8D5c",
+        "vote": 1,
+        "timestamp": "2024-01-11T10:30:00.000Z"
+      },
+      {
+        "address": "0x89235Cc6634C0532925a3b8D4B5A3B8D5B3B8D5a",
+        "vote": -1,
+        "timestamp": "2024-01-12T14:20:00.000Z"
+      }
+    ],
+    "analysis": {
+      "summary": "代币经济模型调整涉及核心经济参数，风险较高但潜力巨大，需要谨慎评估市场影响。",
+      "category": "tokenomics",
+      "risk": "high",
+      "suggestions": [
+        "建议分阶段实施调整",
+        "进行社区压力测试",
+        "建立回滚机制"
+      ],
+      "confidence": 0.78,
+      "analyzed_at": "2024-01-10T09:00:00.000Z"
+    },
+    "milvus_id": "proposal_2",
+    "tags": ["代币经济", "通胀", "staking"]
+  },
+  {
+    "id": 3,
+    "title": "DApp 用户体验改进计划",
+    "content": "用户反馈当前DApp界面复杂，操作流程繁琐。我们计划进行以下改进：1. 重新设计用户界面，简化操作流程；2. 增加交易状态实时显示；3. 优化移动端体验；4. 添加新手引导教程。预计需要2个月完成。",
+    "description": "改进DApp用户体验，简化界面和操作流程",
+    "summary": "针对用户反馈的界面复杂问题，提出界面重设计和操作简化的改进计划，预计2个月完成...",
+    "budget": 3000,
+    "status": "implemented",
+    "category": "technical",
+    "risk": "low",
+    "votes": 45,
+    "vector": [0.15, -0.08, 0.28, 0.24, -0.38, 0.05, 0.18, -0.31, 0.35, -0.09],
+    "createdAt": "2024-01-05T14:20:00.000Z",
+    "updatedAt": "2024-01-25T11:15:00.000Z",
+    "created_by": "0x942d35Cc6634C0532925a3b8D4B5A3B8D5B3B8D5",
+    "voters": [
+      {
+        "address": "0x69235Cc6634C0532925a3b8D4B5A3B8D5B3B8D5d",
+        "vote": 1,
+        "timestamp": "2024-01-06T16:45:00.000Z"
+      },
+      {
+        "address": "0x79235Cc6634C0532925a3b8D4B5A3B8D5B3B8D5c",
+        "vote": 1,
+        "timestamp": "2024-01-07T10:15:00.000Z"
+      }
+    ],
+    "analysis": {
+      "summary": "用户体验改进是相对低风险的技术优化，能够显著提升用户满意度和产品竞争力。",
+      "category": "technical",
+      "risk": "low",
+      "suggestions": [
+        "建议进行A/B测试",
+        "收集用户反馈迭代优化",
+        "考虑无障碍访问功能"
+      ],
+      "confidence": 0.92,
+      "analyzed_at": "2024-01-05T15:30:00.000Z"
+    },
+    "milvus_id": "proposal_3",
+    "tags": ["用户体验", "界面设计", "移动端"]
+  },
+  {
+    "id": 4,
+    "title": "社区市场推广活动提案",
+    "content": "为扩大项目影响力，我们建议开展以下市场活动：1. 在主要城市举办线下meetup；2. 与行业KOL合作推广；3. 参加国际区块链会议；4. 开展社交媒体营销活动。预算主要用于场地租赁、差旅费和营销材料。",
+    "description": "开展市场推广活动，扩大项目影响力",
+    "summary": "提出包括线下meetup、KOL合作和会议参与在内的综合市场推广方案...",
+    "budget": 12000,
+    "status": "pending",
+    "category": "marketing",
+    "risk": "medium",
+    "votes": 8,
+    "vector": [0.11, -0.12, 0.35, 0.19, -0.41, 0.09, 0.16, -0.27, 0.32, -0.14],
+    "createdAt": "2024-01-20T13:10:00.000Z",
+    "updatedAt": "2024-01-20T13:10:00.000Z",
+    "created_by": "0xa42d35Cc6634C0532925a3b8D4B5A3B8D5B3B8D5",
+    "voters": [],
+    "analysis": {
+      "summary": "市场推广活动能够有效提升项目知名度，但需要合理控制预算和评估ROI。",
+      "category": "marketing",
+      "risk": "medium",
+      "suggestions": [
+        "建议设定明确的KPI指标",
+        "分阶段评估活动效果",
+        "考虑数字营销渠道"
+      ],
+      "confidence": 0.76,
+      "analyzed_at": "2024-01-20T14:00:00.000Z"
+    },
+    "milvus_id": "proposal_4",
+    "tags": ["市场推广", "meetup", "社交媒体"]
+  },
+  {
+    "id": 5,
+    "title": "智能合约安全审计升级",
+    "content": "为确保协议安全，我们建议对核心智能合约进行新一轮的安全审计。计划邀请三家知名安全公司进行独立审计，包括代码审查、漏洞测试和形式化验证。审计周期预计4-6周。",
+    "description": "对核心智能合约进行新一轮安全审计",
+    "summary": "为确保协议安全，提出邀请三家安全公司进行独立审计的方案，周期4-6周...",
+    "budget": 25000,
+    "status": "rejected",
+    "category": "security",
+    "risk": "low",
+    "votes": 12,
+    "vector": [0.09, -0.18, 0.41, 0.16, -0.35, 0.11, 0.24, -0.22, 0.31, -0.16],
+    "createdAt": "2024-01-08T11:45:00.000Z",
+    "updatedAt": "2024-01-15T09:30:00.000Z",
+    "created_by": "0xb42d35Cc6634C0532925a3b8D4B5A3B8D5B3B8D5",
+    "voters": [
+      {
+        "address": "0x59235Cc6634C0532925a3b8D4B5A3B8D5B3B8D5e",
+        "vote": -1,
+        "timestamp": "2024-01-09T13:20:00.000Z"
+      }
+    ],
+    "analysis": {
+      "summary": "安全审计是必要的风险管理措施，但预算较高需要充分论证其必要性。",
+      "category": "security",
+      "risk": "low",
+      "suggestions": [
+        "建议比较不同审计公司的报价",
+        "考虑分批进行审计",
+        "评估现有审计覆盖范围"
+      ],
+      "confidence": 0.81,
+      "analyzed_at": "2024-01-08T12:30:00.000Z"
+    },
+    "milvus_id": "proposal_5",
+    "tags": ["安全审计", "智能合约", "安全"]
+  }
+]
